@@ -12,9 +12,9 @@ namespace WebAddressbookTests
         [Test]
         public void TheContactTestCaseTest()
         {
-            Open_Homepage();
-            Login(new AccountData ("admin", "secret"));
-            InitContactCreation();
+            navigationHelper.Open_Homepage();
+            loginHelper.Login(new AccountData ("admin", "secret"));
+            contactHelper.InitContactCreation();
 
             ContactData contact = new ContactData("ivan", "ivanov");
             contact.MiddleName = "Ivanovich";
@@ -41,10 +41,9 @@ namespace WebAddressbookTests
             contact.BDay = "10";
             contact.Path = "C:\\1.png";
 
-            FillContactForm(contact);
-            SubmintContactCreation();
-            GoToHomePage();
-            LogOut();
+            contactHelper.FillContactForm(contact);
+            contactHelper.SubmintContactCreation();
+            navigationHelper.GoToHomePage();
         }
     }
 }
