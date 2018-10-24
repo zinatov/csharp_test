@@ -10,12 +10,8 @@ namespace WebAddressbookTests
     public class ContactTestCase : TestBase
     {
         [Test]
-        public void TheContactTestCaseTest()
+        public void ContactCreationTest()
         {
-            app.Navigator.Open_Homepage();
-            app.Auth.Login(new AccountData ("admin", "secret"));
-            app.Contacts.InitContactCreation();
-
             ContactData contact = new ContactData("ivan", "ivanov");
             contact.MiddleName = "Ivanovich";
             contact.Nickname = "Ivan1234";
@@ -40,10 +36,7 @@ namespace WebAddressbookTests
             contact.BMonth = "July";
             contact.BDay = "10";
             contact.Path = "C:\\1.png";
-
-            app.Contacts.FillContactForm(contact);
-            app.Contacts.SubmintContactCreation();
-            app.Navigator.GoToHomePage();
+            app.Contacts.Creation(contact);
         }
     }
 }
