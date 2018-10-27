@@ -15,6 +15,35 @@ namespace WebAddressbookTests
 
         }
 
+        public ContactHelper Remove(int v)
+        {
+            SelectContact(v);
+            DeleteContact();
+            driver.SwitchTo().Alert().Accept(); 
+            return this;
+
+        }
+
+        public ContactHelper Modification(int v, ContactData newData)
+        {
+            manager.Navigator.Open_Homepage();
+            InitContactModification(v);
+            FillContactForm(newData);
+            SubmintContactModification();
+            return this;
+        }
+
+        public ContactHelper Creation(ContactData contact)
+        {
+            manager.Navigator.Open_Homepage();
+            InitContactCreation();
+            FillContactForm(contact);
+            SubmintContactCreation();
+            manager.Navigator.GoToHomePage();
+            return this;
+        }
+
+
         public ContactHelper InitContactCreation()
         {
             driver.FindElement(By.LinkText("add new")).Click();
@@ -32,7 +61,6 @@ namespace WebAddressbookTests
             driver.FindElement(By.Name("lastname")).SendKeys(contact.LastName);
             driver.FindElement(By.Name("nickname")).Clear();
             driver.FindElement(By.Name("nickname")).SendKeys(contact.Nickname);
-            driver.FindElement(By.CssSelector("input[name=\"photo\"]")).SendKeys(contact.Path);
             driver.FindElement(By.Name("title")).Clear();
             driver.FindElement(By.Name("title")).SendKeys(contact.Title);
             driver.FindElement(By.Name("company")).Clear();
@@ -55,20 +83,6 @@ namespace WebAddressbookTests
             driver.FindElement(By.Name("email3")).SendKeys(contact.Email3);
             driver.FindElement(By.Name("homepage")).Clear();
             driver.FindElement(By.Name("homepage")).SendKeys(contact.HomePage);
-            driver.FindElement(By.Name("bday")).Click();
-            new SelectElement(driver.FindElement(By.Name("bday"))).SelectByText(contact.BDay);
-            driver.FindElement(By.Name("bmonth")).Click();
-            new SelectElement(driver.FindElement(By.Name("bmonth"))).SelectByText(contact.BMonth);
-            driver.FindElement(By.Name("byear")).Click();
-            driver.FindElement(By.Name("byear")).Clear();
-            driver.FindElement(By.Name("byear")).SendKeys(contact.BYear);
-            driver.FindElement(By.Name("aday")).Click();
-            new SelectElement(driver.FindElement(By.Name("aday"))).SelectByText(contact.ADay);
-            driver.FindElement(By.Name("amonth")).Click();
-            new SelectElement(driver.FindElement(By.Name("amonth"))).SelectByText(contact.AMonth);
-            driver.FindElement(By.Name("ayear")).Click();
-            driver.FindElement(By.Name("ayear")).Clear();
-            driver.FindElement(By.Name("ayear")).SendKeys(contact.AYear);
             driver.FindElement(By.Name("address2")).Clear();
             driver.FindElement(By.Name("address2")).SendKeys(contact.Address2);
             driver.FindElement(By.Name("phone2")).Clear();
@@ -78,12 +92,27 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public ContactHelper Creation(ContactData contact)
+        public ContactHelper SelectContact(int v)
         {
-            InitContactCreation();
-            FillContactForm(contact);
-            SubmintContactCreation();
-            manager.Navigator.GoToHomePage();
+            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + (v + 1) + "]")).Click();
+            return this;
+        }
+
+        public ContactHelper DeleteContact()
+        {
+            driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
+            return this;
+        }
+
+        public ContactHelper InitContactModification(int v)
+        {
+            driver.FindElement(By.XPath("(//img[@alt='Edit'])[" + (v + 1) + "]")).Click();
+            return this;
+        }
+
+        public ContactHelper SubmintContactModification()
+        {
+            driver.FindElement(By.XPath("(//input[@name='update'])[2]")).Click();
             return this;
         }
 

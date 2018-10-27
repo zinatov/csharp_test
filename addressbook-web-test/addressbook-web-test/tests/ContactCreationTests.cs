@@ -29,13 +29,13 @@ namespace WebAddressbookTests
             contact.Address2 = "second address";
             contact.Phone2 = "second home";
             contact.Notes = "second note";
-            contact.AYear = "1994";
-            contact.AMonth = "September";
-            contact.ADay = "12";
-            contact.BYear = "1978";
-            contact.BMonth = "July";
-            contact.BDay = "10";
-            contact.Path = "C:\\1.png";
+            app.Contacts.Creation(contact);
+        }
+
+        [Test]
+        public void EmptyContactCreationTest()
+        {
+            ContactData contact = new ContactData("", "");
             app.Contacts.Creation(contact);
         }
     }
