@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
@@ -18,8 +19,10 @@ namespace WebAddressbookTests
         protected IWebDriver driver;
         protected StringBuilder verificationErrors;
 
+        private static ThreadLocal<ApplicationManager> app = new ThreadLocal<ApplicationManager>();
 
-        public ApplicationManager()
+
+        private ApplicationManager()
         {
             driver = new FirefoxDriver();
             verificationErrors = new StringBuilder(); 
@@ -30,15 +33,7 @@ namespace WebAddressbookTests
             contactHelper = new ContactHelper(this);
         }
 
-        public IWebDriver Driver
-        {
-            get
-            {
-                return driver;
-            }
-        }
-
-        public void Stop()
+        ~ApplicationManager()
         {
             try
             {
@@ -47,6 +42,23 @@ namespace WebAddressbookTests
             catch (Exception)
             {
                 // Ignore errors if unable to close the browser
+            }
+        }
+
+        public static ApplicationManager GetInstance()
+        {
+            if (! app.IsValueCreated)
+            {
+                app.Value = new ApplicationManager();
+            }
+            return app.Value;
+        }
+
+        public IWebDriver Driver
+        {
+            get
+            {
+                return driver;
             }
         }
 
