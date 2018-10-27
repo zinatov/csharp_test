@@ -29,13 +29,6 @@ namespace WebAddressbookTests
             newData.Address2 = "Modify_second address";
             newData.Phone2 = "Modify_second home";
             newData.Notes = "Modify_second note";
-            newData.AYear = "1994";
-            newData.AMonth = "October";
-            newData.ADay = "1";
-            newData.BYear = "1990";
-            newData.BMonth = "July";
-            newData.BDay = "10";
-            newData.Path = "C:\\1.png";
 
             app.Contacts.Modification(1, newData);
         }
