@@ -45,6 +45,23 @@ namespace WebAddressbookTests
             return this;
         }
 
+        public void GroupElementVerification()
+        {
+            manager.Navigator.GoToGroupsPage();
+            if (! IsGroupExist())
+            {
+                GroupData group = new GroupData("for_test_1");
+                group.Footer = "for_test_2";
+                group.Header = "for_test_3";
+                Create(group);
+            }
+        }
+
+        private bool IsGroupExist()
+        {
+            return IsElementPresent(By.ClassName("group"));
+        }
+
         public GroupHelper InitGroupCreation()
         {
             driver.FindElement(By.Name("new")).Click();

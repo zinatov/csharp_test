@@ -12,6 +12,8 @@ namespace WebAddressbookTests
         [Test]
         public void ContactModificationTest()
         {
+            app.Contacts.ContactElementVerification();
+
             ContactData newData = new ContactData("modify_ivan", "modify_ivanov");
             newData.MiddleName = "Modify_Ivanovich";
             newData.Nickname = "Modify_Ivan1234";
@@ -30,7 +32,7 @@ namespace WebAddressbookTests
             newData.Phone2 = "Modify_second home";
             newData.Notes = "Modify_second note";
 
-            app.Contacts.Modification(1, newData);
+            app.Contacts.Modification(0, newData);
         }
     }
 }

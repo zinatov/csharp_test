@@ -14,6 +14,16 @@ namespace WebAddressbookTests
         public ContactHelper(ApplicationManager manager) : base(manager)  {
         }
 
+        public void ContactElementVerification()
+        {
+            manager.Navigator.GoToGroupsPage();
+            if (!IsContactExist())
+            {
+                ContactData contact = new ContactData("for_test_1", "for_test_2");
+                Creation(contact);
+            }
+        }
+
         public ContactHelper Remove(int v)
         {
             manager.Navigator.Open_Homepage();
@@ -101,5 +111,12 @@ namespace WebAddressbookTests
             driver.FindElement(By.XPath("(//input[@name='submit'])[2]")).Click();
             return this;
         }
+        
+        private bool IsContactExist()
+        {
+            return IsElementPresent(By.TagName("td"));
+        }
     }
+
+
 }

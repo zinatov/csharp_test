@@ -35,13 +35,11 @@ namespace WebAddressbookTests
         public bool IsLoggedIn()
         {
             return IsElementPresent(By.Name("logout"));
-            throw new NotImplementedException();
         }
 
         public bool IsLoggedIn(AccountData account)
         {
             return IsLoggedIn() && driver.FindElement(By.Name("logout")).FindElement(By.TagName("b")).Text == "(" + account.Username + ")";
-            throw new NotImplementedException();
         }
 
         public void LogOut()
