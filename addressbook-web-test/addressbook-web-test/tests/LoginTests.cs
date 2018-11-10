@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using NUnit.Framework;
 
 namespace WebAddressbookTests
@@ -29,11 +29,12 @@ namespace WebAddressbookTests
         {
             //prepare
             app.Auth.LogOut();
-
+            Thread.Sleep(2000);
             // action
             AccountData account = new AccountData("admin", "1234565");
             app.Auth.Login(account);
 
+          
             // verification
             Assert.IsFalse(app.Auth.IsLoggedIn(account));
         }
