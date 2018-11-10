@@ -15,13 +15,15 @@ namespace WebAddressbookTests
         {
             app.Contacts.ContactElementVerification();
 
-            List<ContactData> oldContact = app.Contacts.GetContactList();
+            List<ContactData> oldContacts = app.Contacts.GetContactList();
             app.Contacts.Remove(0);
-            Thread.Sleep(2000);
+            Thread.Sleep(4000);
 
-            List<ContactData> newContact = app.Contacts.GetContactList();
-            oldContact.RemoveAt(0);
-            Assert.AreEqual(oldContact, newContact);
+            Assert.AreEqual(oldContacts.Count - 1, app.Contacts.GetContactCount());
+
+            List<ContactData> newContacts = app.Contacts.GetContactList();
+            oldContacts.RemoveAt(0);
+            Assert.AreEqual(oldContacts, newContacts);
         }
     }
 }

@@ -50,7 +50,6 @@ namespace WebAddressbookTests
             FillGroupForm(newData);
             SubmintGroupModification();
             manager.Navigator.GoToGroupsPage();
-
             return this;
         }
 
