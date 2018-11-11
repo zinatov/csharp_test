@@ -36,7 +36,10 @@ namespace WebAddressbookTests
                 ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("span.group"));
                 foreach (IWebElement element in elements)
                 {
-                    groupcache.Add(new GroupData(element.Text));
+                    groupcache.Add(new GroupData(element.Text)
+                    {
+                        Id = element.FindElement(By.TagName("input")).GetAttribute("value")
+                    });                    
                 }
             }
             return new List<GroupData>(groupcache);

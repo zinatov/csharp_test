@@ -36,10 +36,12 @@ namespace WebAddressbookTests
                 foreach (IWebElement element in elements)
                 {
                     var cells = element.FindElements(By.CssSelector("td"));
-                    contactcache.Add(new ContactData(cells[2].Text, cells[1].Text));
+                    contactcache.Add(new ContactData(cells[2].Text, cells[1].Text)
+                    {
+                        Id = element.FindElement(By.TagName("input")).GetAttribute("value")
+                    });
                 }
             }
-           
             return new List<ContactData>(contactcache);
         }
 
