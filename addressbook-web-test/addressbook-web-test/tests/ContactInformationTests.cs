@@ -22,6 +22,12 @@ namespace WebAddressbookTests
             Assert.AreEqual(fromTable.AllEmails, fromEdit.AllEmails);
         }
 
-
+        [Test]
+        public void ContactSearchCountTest()
+        {
+            int contactNumberOnPage = app.Contacts.GetContactCount();
+            int contactNumberOnSearchResult = app.Contacts.GetNumberOfSearchResult();
+            Assert.AreEqual(contactNumberOnPage, contactNumberOnSearchResult);
+        }
     }
 }

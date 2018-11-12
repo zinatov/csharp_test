@@ -188,6 +188,13 @@ namespace WebAddressbookTests
             };
         }
 
+        public int GetNumberOfSearchResult()
+        {
+            manager.Navigator.Open_Homepage();
+            string number = driver.FindElement(By.CssSelector("span#search_count")).Text;
+            return Int32.Parse(number);
+        }
+
 
         private bool IsContactExist()
         {
