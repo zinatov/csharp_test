@@ -56,11 +56,6 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public int GetGroupCount()
-        {
-            return driver.FindElements(By.CssSelector("span.group")).Count;
-        }
-
         public GroupHelper Create(GroupData group)
         {
             manager.Navigator.GoToGroupsPage();
@@ -81,6 +76,11 @@ namespace WebAddressbookTests
                 group.Header = "for_test_3";
                 Create(group);
             }
+        }
+        
+        public int GetGroupCount()
+        {
+            return driver.FindElements(By.CssSelector("span.group")).Count;
         }
 
         private bool IsGroupExist()

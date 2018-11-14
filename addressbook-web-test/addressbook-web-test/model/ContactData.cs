@@ -47,7 +47,12 @@ namespace WebAddressbookTests
             {
                 return 1;
             }
-            return Name.CompareTo(other.Name);
+
+            if (LastName.CompareTo(other.LastName) == 0)
+            {
+                return Name.CompareTo(other.Name);
+            }
+            return LastName.CompareTo(other.LastName);
         }
 
         public string Name { get; set; }
@@ -90,6 +95,23 @@ namespace WebAddressbookTests
             }
         }
 
+        public string fullInfo
+        {
+            get
+            {
+                if (fullInfo != null)
+                {
+                    return fullInfo;
+                }
+                else
+                {
+                    return (Name + "\r\n" + LastName + "\r\n" + Address + "\r\n"
+                            + "H: " + CleanUp(Home) + "M: " + CleanUp(Mobile) + "W: " + Work
+                            + CleanUp(Email1) + CleanUp(Email2) + CleanUp(Email3)).Trim();
+                }
+            }
+        }
+
         private string CleanUp(string text)
         {
             if(text == null || text == "")
@@ -98,6 +120,8 @@ namespace WebAddressbookTests
             }
             return Regex.Replace(text, "[ -()]", "");
         }
+
+
 
         public string Fax { get; set; }
       
