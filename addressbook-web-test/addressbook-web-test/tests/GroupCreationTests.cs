@@ -4,6 +4,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Collections.Generic;
 using NUnit.Framework;
+using System.IO;
 
 namespace WebAddressbookTests
 {
@@ -22,6 +23,13 @@ namespace WebAddressbookTests
                 });
             }
             return group;
+        }
+
+        public static IEnumerable<GroupData> GroupDataFromFile()
+        {
+            List<GroupData> groups = new List<GroupData>();
+           // File.ReadAllText();
+            return groups;
         }
 
         [Test, TestCaseSource("RandomDataProvider")]

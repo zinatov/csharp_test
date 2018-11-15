@@ -83,7 +83,7 @@ namespace WebAddressbookTests
                 }
                 else
                 {
-                    return (CleanUp(Home) + CleanUp(Mobile) + CleanUp(Work)).Trim();
+                    return (CleanUp(Home) + "\r\n" + CleanUp(Mobile) + "\r\n" + CleanUp(Work) + "\r\n" + CleanUp(Phone2)).Trim();
                 }
             }
 
@@ -140,7 +140,7 @@ namespace WebAddressbookTests
                 }
                 else
                 {
-                    return (CleanUp(Email1) + CleanUp(Email2) + CleanUp(Email3)).Trim();
+                    return (CleanUp(Email1) + "\r\n" + CleanUp(Email2) + "\r\n" + CleanUp(Email3)).Trim();
                 }
             }
 
