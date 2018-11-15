@@ -126,11 +126,58 @@ namespace WebAddressbookTests
             };
         }
 
+        public string GetContactInfoFromEditFormForView(int v)
+        {
+            manager.Navigator.Open_Homepage();
+            InitContactModification(v);
+            string firstName = driver.FindElement(By.Name("firstname")).GetAttribute("value");
+            string middleName = driver.FindElement(By.Name("middlename")).GetAttribute("value");
+            string lastName = driver.FindElement(By.Name("lastname")).GetAttribute("value");
+            string nickName = driver.FindElement(By.Name("nickname")).GetAttribute("value");
+
+            string title = driver.FindElement(By.Name("title")).GetAttribute("value");
+            string company = driver.FindElement(By.Name("company")).GetAttribute("value");
+            string address = driver.FindElement(By.Name("address")).GetAttribute("value");
+
+            string homePhone = driver.FindElement(By.Name("home")).GetAttribute("value");
+            string mobilePhone = driver.FindElement(By.Name("mobile")).GetAttribute("value");
+            string workPhone = driver.FindElement(By.Name("work")).GetAttribute("value");
+            string fax = driver.FindElement(By.Name("fax")).GetAttribute("value");
+
+            string email1 = driver.FindElement(By.Name("email")).GetAttribute("value");
+            string email2 = driver.FindElement(By.Name("email2")).GetAttribute("value");
+            string email3 = driver.FindElement(By.Name("email3")).GetAttribute("value");
+
+            string homepage = driver.FindElement(By.Name("homepage")).GetAttribute("value");
+            string address2 = driver.FindElement(By.Name("address2")).GetAttribute("value");
+            string phone2 = driver.FindElement(By.Name("phone2")).GetAttribute("value");
+            string notes = driver.FindElement(By.Name("notes")).GetAttribute("value");
+
+
+            return (firstName + " " + middleName + " " + lastName + "\r\n"
+                         + nickName + "\r\n"
+                         + title + "\r\n"
+                         + company + "\r\n"
+                         + address + "\r\n\r\n"
+                         + "H: " + homePhone + "\r\n"
+                         + "M: " + mobilePhone + "\r\n"
+                         + "W: " + workPhone + "\r\n"
+                         + "F: " + fax + "\r\n\r\n"
+                         + email1 + "\r\n"
+                         + email2 + "\r\n"
+                         + email3 + "\r\n"
+                         + "Homepage:" + "\r\n" + homepage + "\r\n\r\n\r\n"
+                         + address2 + "\r\n\r\n"
+                         + "P: " + phone2 + "\r\n\r\n"
+                         + notes
+                         ).Trim();
+        }
+
         public string GetContactInfoFromViewForm(int v)
         {
             manager.Navigator.Open_Homepage();
             OpenContactViewForm(v);
-            string fullInfo = driver.FindElement(By.Id("content")).GetAttribute("Value");
+            string fullInfo = driver.FindElement(By.Id("content")).Text;
             return fullInfo;
         }
 

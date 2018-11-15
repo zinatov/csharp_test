@@ -33,9 +33,10 @@ namespace WebAddressbookTests
         [Test]
         public void TestContactInformationOnView_Edit() //проерка информации о контакте на странице редактирования и на странице просмотра
         {
-            //ContactData fromView = app.Contacts.GetContactInfoFromViewForm(0);
-            ContactData fromEdit = app.Contacts.GetContactInfoFromEditForm(0);
-            //Assert.AreEqual(fromView, fromEdit);
+            string fromView = app.Contacts.GetContactInfoFromViewForm(0);
+            string fromEdit = app.Contacts.GetContactInfoFromEditFormForView(0);
+            System.Console.Write(fromView);
+            Assert.AreEqual(fromView, fromEdit);
         }
     }
 }

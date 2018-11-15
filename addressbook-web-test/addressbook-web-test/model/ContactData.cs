@@ -55,26 +55,6 @@ namespace WebAddressbookTests
             return LastName.CompareTo(other.LastName);
         }
 
-        public string Name { get; set; }
-
-        public string LastName { get; set; }
- 
-        public string MiddleName { get; set; }
-
-        public string Nickname { get; set; }
- 
-        public string Title { get; set; }
-
-        public string Company { get; set; }   
-
-        public string Address { get; set; }
-
-        public string Home { get; set; }
-       
-        public string Mobile { get; set; } 
-
-        public string Work { get; set; }
-
         public string AllPhones
         {
             get
@@ -95,24 +75,7 @@ namespace WebAddressbookTests
             }
         }
 
-        public string fullInfo
-        {
-            get
-            {
-                if (fullInfo != null)
-                {
-                    return fullInfo;
-                }
-                else
-                {
-                    return (Name + "\r\n" + LastName + "\r\n" + Address + "\r\n"
-                            + "H: " + CleanUp(Home) + "M: " + CleanUp(Mobile) + "W: " + Work
-                            + CleanUp(Email1) + CleanUp(Email2) + CleanUp(Email3)).Trim();
-                }
-            }
-        }
-
-        private string CleanUp(string text)
+        public string CleanUp(string text)
         {
             if(text == null || text == "")
             {
@@ -121,7 +84,25 @@ namespace WebAddressbookTests
             return Regex.Replace(text, "[ -()]", "");
         }
 
+        public string Name { get; set; }
 
+        public string LastName { get; set; }
+
+        public string MiddleName { get; set; }
+
+        public string Nickname { get; set; }
+
+        public string Title { get; set; }
+
+        public string Company { get; set; }
+
+        public string Address { get; set; }
+
+        public string Home { get; set; }
+
+        public string Mobile { get; set; }
+
+        public string Work { get; set; }
 
         public string Fax { get; set; }
       
