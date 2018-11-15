@@ -10,46 +10,37 @@ namespace WebAddressbookTests
     [TestFixture]
     public class ContactTestCase : AuthTestBase
     {
-        [Test]
-        public void ContactCreationTest()
+        public static IEnumerable<ContactData> RandomDataProvider()
         {
-            ContactData contact = new ContactData("ivan", "ivanov");
-            contact.MiddleName = "Ivanovich";
-            contact.Nickname = "Ivan1234";
-            contact.Title = "Title";
-            contact.Company = "Company";
-            contact.Address = "Address";
-            contact.Home = "89229229222";
-            contact.Mobile = "89129129122";
-            contact.Work = "89029029022";
-            contact.Fax = "888888888888";
-            contact.Email1 = "Ivanov123@imail.ru";
-            contact.Email2 = "Ivanov321@imail.ru";
-            contact.Email3 = "Ivanov432@imail.ru";
-            contact.HomePage = "ivanovHomepage.Ru";
-            contact.Address2 = "second address";
-            contact.Phone2 = "second home";
-            contact.Notes = "second note";
-
-            List<ContactData> oldContacts = app.Contacts.GetContactList();
-
-            app.Contacts.Creation(contact);
-
-            Assert.AreEqual(oldContacts.Count + 1, app.Contacts.GetContactCount());
-
-            List<ContactData> newContacts = app.Contacts.GetContactList();
-
-            oldContacts.Add(contact);
-            oldContacts.Sort();
-            newContacts.Sort();
-            Assert.AreEqual(oldContacts, newContacts);
+            List<ContactData> contact = new List<ContactData>();
+            for (int i = 0; i < 5; i++)
+            {
+                contact.Add(new ContactData(GenerateRandonString(10), GenerateRandonString(10))
+                {
+                    MiddleName = GenerateRandonString(10),
+                    Nickname = GenerateRandonString(10),
+                    Title = GenerateRandonString(20),
+                    Company = GenerateRandonString(20),
+                    Address = GenerateRandonString(20),
+                    Home = GenerateRandonString(10),
+                    Mobile = GenerateRandonString(10),
+                    Work = GenerateRandonString(10),
+                    Fax = GenerateRandonString(10),
+                    Email1 = GenerateRandonString(10),
+                    Email2 = GenerateRandonString(10),
+                    Email3 = GenerateRandonString(10),
+                    HomePage = GenerateRandonString(20),
+                    Address2 = GenerateRandonString(20),
+                    Phone2 = GenerateRandonString(10),
+                    Notes = GenerateRandonString(30)
+                });
+            }
+            return contact;
         }
 
-        [Test]
-        public void EmptyContactCreationTest()
+        [Test, TestCaseSource("RandomDataProvider")]
+        public void ContactCreationTest(ContactData contact)
         {
-            ContactData contact = new ContactData("", "");
-
             List<ContactData> oldContacts = app.Contacts.GetContactList();
 
             app.Contacts.Creation(contact);
