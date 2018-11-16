@@ -28,11 +28,20 @@ namespace WebAddressbookTests
         public static IEnumerable<GroupData> GroupDataFromFile()
         {
             List<GroupData> groups = new List<GroupData>();
-           // File.ReadAllText();
+            String[] lines = File.ReadAllLines("C:\\Users\\Ruslan.Zinatov\\Source\\Repos\\csharp_test\\addressbook-web-test\\addressbook-web-test\\groups.csv");
+            foreach (string l in lines)
+            {
+                String[] parts = l.Split(',');
+                groups.Add(new GroupData(parts[0])
+                {
+                    Header = parts[1],
+                    Footer = parts[2]
+                });
+            }
             return groups;
         }
 
-        [Test, TestCaseSource("RandomDataProvider")]
+        [Test, TestCaseSource("GroupDataFromFile")]
         public void GroupCreationTest(GroupData group)
         {
             List<GroupData> oldGroups = app.Groups.GetGroupList();
