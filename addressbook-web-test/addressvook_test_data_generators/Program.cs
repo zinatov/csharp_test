@@ -15,10 +15,13 @@ namespace addressvook_test_data_generators
     {
         static void Main(string[] args)
         {
-            int count = Convert.ToInt32(args[0]);
+            String dataType = args[0];
+            int count = Convert.ToInt32(args[1]);
+            StreamWriter writer = new StreamWriter(args[2]);
+            String format = args[3];
             List<GroupData> groups = new List<GroupData>();
-            StreamWriter writer = new StreamWriter(args[1]);
-            String format = args[2];
+            List<ContactData> contacts = new List<ContactData>();
+
             for (int i = 0; i < count; i++)
             {
                 groups.Add(new GroupData(TestBase.GenerateRandonString(10))
@@ -27,26 +30,83 @@ namespace addressvook_test_data_generators
                     Footer = TestBase.GenerateRandonString(10)
                 });
             }
-            if (format == "csv")
+
+            for (int i = 0; i < count; i++)
             {
-                writeGroupsToCsvFile(groups, writer);
-            } 
-            else if (format == "xml")
-            {
-                writeGroupsToXmlFile(groups, writer);
+                contacts.Add(new ContactData(TestBase.GenerateRandonString(10), TestBase.GenerateRandonString(10))
+                {
+                    MiddleName = TestBase.GenerateRandonString(10),
+                    Nickname = TestBase.GenerateRandonString(10),
+                    Title = TestBase.GenerateRandonString(20),
+                    Company = TestBase.GenerateRandonString(20),
+                    Address = TestBase.GenerateRandonString(20),
+                    Home = TestBase.GenerateRandonString(10),
+                    Mobile = TestBase.GenerateRandonString(10),
+                    Work = TestBase.GenerateRandonString(10),
+                    Fax = TestBase.GenerateRandonString(10),
+                    Email1 = TestBase.GenerateRandonString(10),
+                    Email2 = TestBase.GenerateRandonString(10),
+                    Email3 = TestBase.GenerateRandonString(10),
+                    HomePage = TestBase.GenerateRandonString(20),
+                    Address2 = TestBase.GenerateRandonString(20),
+                    Phone2 = TestBase.GenerateRandonString(10),
+                    Notes = TestBase.GenerateRandonString(30)
+                });
             }
-            else if (format == "json")
+
+            if (dataType == "contact")
             {
-                writeGroupsToJsonFile(groups, writer);
+                if (format == "xml")
+                {
+                    writeContactsToXmlFile(contacts, writer);
+                }
+                else if (format == "json")
+                {
+                    writeContactsToJsonFile(contacts, writer);
+                }
+                else
+                {
+                    System.Console.Out.Write("Neverny Format " + format);
+                }
+            }
+            else if (dataType == "group")
+            {
+                if (format == "csv")
+                {
+                    writeGroupsToCsvFile(groups, writer);
+                }
+                else if (format == "xml")
+                {
+                    writeGroupsToXmlFile(groups, writer);
+                }
+                else if (format == "json")
+                {
+                    writeGroupsToJsonFile(groups, writer);
+                }
+                else
+                {
+                    System.Console.Out.Write("Neverny Format " + format);
+                }
             }
             else
             {
-                System.Console.Out.Write("Neverny Format " + format);
+                System.Console.Out.Write("Neverny tip " + dataType);
             }
-
             writer.Close();
         }
 
+        //contacts
+        static void writeContactsToXmlFile(List<ContactData> contacts, StreamWriter writer)
+        {
+            new XmlSerializer(typeof(List<ContactData>)).Serialize(writer, contacts);
+        }
+
+        static void writeContactsToJsonFile(List<ContactData> contacts, StreamWriter writer)
+        {
+            writer.Write(JsonConvert.SerializeObject(contacts, Newtonsoft.Json.Formatting.Indented));
+        }
+
+        //groups
         static void writeGroupsToCsvFile(List<GroupData> groups, StreamWriter writer)
         {
             foreach (GroupData group in groups)
@@ -54,8 +114,8 @@ namespace addressvook_test_data_generators
                 writer.WriteLine(String.Format("${0},${1},${2}",
                     group.Name, group.Header, group.Footer));
             }
-
         }
+
         static void writeGroupsToXmlFile(List<GroupData> groups, StreamWriter writer)
         {
             new XmlSerializer(typeof(List<GroupData>)).Serialize(writer, groups);
