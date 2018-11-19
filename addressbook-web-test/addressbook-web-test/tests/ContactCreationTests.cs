@@ -2,8 +2,12 @@
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
-using NUnit.Framework;
 using System.Collections.Generic;
+using NUnit.Framework;
+using System.IO;
+using System.Xml;
+using System.Xml.Serialization;
+using Newtonsoft.Json;
 
 namespace WebAddressbookTests
 {
@@ -38,7 +42,19 @@ namespace WebAddressbookTests
             return contact;
         }
 
-        [Test, TestCaseSource("RandomDataProvider")]
+        public static IEnumerable<ContactData> ContactDataFromXmlFile()
+        {
+            return (List<ContactData>)
+                new XmlSerializer(typeof(List<ContactData>)).
+                Deserialize(new StreamReader("C:\\Users\\Ruslan.Zinatov\\Source\\Repos\\csharp_test\\addressbook-web-test\\addressbook-web-test\\contact.xml"));
+        }
+
+        public static IEnumerable<ContactData> ContactDataFromJsonFile()
+        {
+            return JsonConvert.DeserializeObject<List<ContactData>>(File.ReadAllText("C:\\Users\\Ruslan.Zinatov\\Source\\Repos\\csharp_test\\addressbook-web-test\\addressbook-web-test\\contact.json"));
+        }
+
+        [Test, TestCaseSource("ContactDataFromJsonFile")]
         public void ContactCreationTest(ContactData contact)
         {
             List<ContactData> oldContacts = app.Contacts.GetContactList();
