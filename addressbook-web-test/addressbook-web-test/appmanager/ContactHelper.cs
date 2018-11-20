@@ -37,7 +37,7 @@ namespace WebAddressbookTests
 
         public void ContactElementVerification()
         {
-            manager.Navigator.GoToGroupsPage();
+            manager.Navigator.Open_Homepage();
             if (!IsContactExist())
             {
                 ContactData contact = new ContactData("for_test_1", "for_test_2");

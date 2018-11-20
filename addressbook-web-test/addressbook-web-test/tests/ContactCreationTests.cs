@@ -12,7 +12,7 @@ using Newtonsoft.Json;
 namespace WebAddressbookTests
 {
     [TestFixture]
-    public class ContactTestCase : AuthTestBase
+    public class ContactTestCase : ContactTestBase
     {
         public static IEnumerable<ContactData> RandomDataProvider()
         {
@@ -46,24 +46,24 @@ namespace WebAddressbookTests
         {
             return (List<ContactData>)
                 new XmlSerializer(typeof(List<ContactData>)).
-                Deserialize(new StreamReader("C:\\Users\\Ruslan.Zinatov\\Source\\Repos\\csharp_test\\addressbook-web-test\\addressbook-web-test\\contact.xml"));
+                Deserialize(new StreamReader("C:\\Source\\Repos\\csharp_test\\addressbook-web-test\\addressbook-web-test\\contact.xml"));
         }
 
         public static IEnumerable<ContactData> ContactDataFromJsonFile()
         {
-            return JsonConvert.DeserializeObject<List<ContactData>>(File.ReadAllText("C:\\Users\\Ruslan.Zinatov\\Source\\Repos\\csharp_test\\addressbook-web-test\\addressbook-web-test\\contact.json"));
+            return JsonConvert.DeserializeObject<List<ContactData>>(File.ReadAllText("C:\\Source\\Repos\\csharp_test\\addressbook-web-test\\addressbook-web-test\\contact.json"));
         }
 
         [Test, TestCaseSource("ContactDataFromJsonFile")]
         public void ContactCreationTest(ContactData contact)
         {
-            List<ContactData> oldContacts = app.Contacts.GetContactList();
+            List<ContactData> oldContacts = ContactData.GetAll();//app.Contacts.GetContactList();//ContactData.GetAll();
 
             app.Contacts.Creation(contact);
 
             Assert.AreEqual(oldContacts.Count + 1, app.Contacts.GetContactCount());
 
-            List<ContactData> newContacts = app.Contacts.GetContactList();
+            List<ContactData> newContacts = ContactData.GetAll();//app.Contacts.GetContactList();//ContactData.GetAll();
 
             oldContacts.Add(contact);
             oldContacts.Sort();

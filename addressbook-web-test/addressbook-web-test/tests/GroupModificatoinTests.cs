@@ -8,7 +8,7 @@ using NUnit.Framework;
 namespace WebAddressbookTests
 {
     [TestFixture]
-    public class GroupModificationTests : AuthTestBase
+    public class GroupModificationTests : GroupTestBase
     {
         [Test]
         public void GroupModificationTest()
@@ -19,10 +19,11 @@ namespace WebAddressbookTests
             newData.Header = "two";
             newData.Footer = "three";
 
-            List<GroupData> oldGroups = app.Groups.GetGroupList();
+            List<GroupData> oldGroups = GroupData.GetAll();
             GroupData oldData = oldGroups[0];
+            GroupData toBeModify = oldGroups[0];
 
-            app.Groups.Modify(0, newData);
+            app.Groups.Modified(toBeModify, newData);
 
             Assert.AreEqual(oldGroups.Count, app.Groups.GetGroupCount());
 
