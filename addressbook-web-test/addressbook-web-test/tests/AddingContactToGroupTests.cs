@@ -29,10 +29,10 @@ namespace WebAddressbookTests
         [Test]
         public void TestRemoveContactFromGroup()
         {
-            List<ContactData> oldList = GroupData.GetAll()[0].GetContacts();
-            ContactData contact = ContactData.GetAll().First();
-
-            app.Contacts.RemoveContactFromGroup(contact);
+            GroupData group = GroupData.GetAll()[0];
+            List<ContactData> oldList = group.GetContacts();
+            ContactData contact = ContactData.GetAll().Intersect(oldList).First();
+            app.Contacts.RemoveContactFromGroup(contact, group);
 
             List<ContactData> newList = GroupData.GetAll()[0].GetContacts();
             newList.Add(contact);
