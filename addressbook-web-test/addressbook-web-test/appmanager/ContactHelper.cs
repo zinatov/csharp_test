@@ -35,7 +35,7 @@ namespace WebAddressbookTests
             return new List<ContactData>(contactcache);
         }
 
-        public void RemoveContactFromGroup(ContactData contact, GroupData group)
+        public void RemoveContactFromGroup(ContactData contact)
         {
             manager.Navigator.Open_Homepage();
             setGroupFilter();
@@ -266,7 +266,7 @@ namespace WebAddressbookTests
 
         public ContactHelper SelectContact(string contactId)
         {
-            driver.FindElement(By.Id(contactId)).Click();
+            driver.FindElement(By.Id("301")).Click();
             return this;
         }
 
@@ -333,7 +333,6 @@ namespace WebAddressbookTests
         {
             new SelectElement(driver.FindElement(By.Name("group"))).SelectByText("TestGroup");
         }
-
 
         private bool IsContactExist()
         {

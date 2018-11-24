@@ -62,7 +62,6 @@ namespace WebAddressbookTests
                 + "\naddress2= " + Address2
                 + "\nphone2= " + Phone2
                 + "\nnotes= " + Notes;
-
         }
 
         public int CompareTo(ContactData other)
