@@ -21,7 +21,7 @@ namespace mantis_tests
 
         private void OpenRegistrationForm()
         {
-            driver.FindElement(By.CssSelector("back-to-login-link pull-left")).Click();
+            driver.FindElement(By.LinkText("Зарегистрировать новую учетную запись")).Click();
         }
 
         public void SubmintRegistrationForm()

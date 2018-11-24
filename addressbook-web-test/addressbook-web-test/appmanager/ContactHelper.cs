@@ -266,7 +266,7 @@ namespace WebAddressbookTests
 
         public ContactHelper SelectContact(string contactId)
         {
-            driver.FindElement(By.Id("301")).Click();
+            driver.FindElement(By.Id(contactId)).Click();
             return this;
         }
 
