@@ -12,10 +12,10 @@ namespace mantis_tests
         [TestFixtureSetUp]
         public void setUpConfig()
         {
-            app.FTP.BackUpFile("C:\\xampp\\htdocs\\mantisbt - 2.18.0\\config\\config_inc.php");
+            app.FTP.BackUpFile("/config_inc.php");
             using (Stream localFile = File.Open("config_inc.php", FileMode.Open))
             {
-                app.FTP.Upload("C:\\xampp\\htdocs\\mantisbt - 2.18.0\\config\\config_inc.php", localFile);
+                app.FTP.Upload("/config_inc.php", localFile);
             }
         }
 
@@ -35,7 +35,7 @@ namespace mantis_tests
         [TestFixtureTearDown]
         public void restoreConfig()
         {
-            app.FTP.RestoreBackUpFile("C:\\xampp\\htdocs\\mantisbt - 2.18.0\\config\\config_inc.php");
+            app.FTP.RestoreBackUpFile("/config_inc.php");
         }
     }
 }
