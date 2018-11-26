@@ -24,6 +24,7 @@ namespace mantis_tests
             verificationErrors = new StringBuilder();
             Registration = new RegistrationHelper(this);
             FTP = new FTPHelper(this);
+            James = new JamesHelper(this);
         }
 
         ~ApplicationManager()
@@ -59,5 +60,6 @@ namespace mantis_tests
 
         public RegistrationHelper Registration { get; set; }
         public FTPHelper FTP { get; set; }
+        public JamesHelper James { get; set; }
     }
 }
