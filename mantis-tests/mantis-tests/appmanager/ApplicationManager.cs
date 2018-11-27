@@ -25,6 +25,7 @@ namespace mantis_tests
             Registration = new RegistrationHelper(this);
             FTP = new FTPHelper(this);
             James = new JamesHelper(this);
+            Mail = new MailHelper(this);
         }
 
         ~ApplicationManager()
@@ -61,5 +62,6 @@ namespace mantis_tests
         public RegistrationHelper Registration { get; set; }
         public FTPHelper FTP { get; set; }
         public JamesHelper James { get; set; }
+        public MailHelper Mail { get; set; }
     }
 }

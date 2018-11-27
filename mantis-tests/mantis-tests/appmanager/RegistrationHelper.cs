@@ -4,11 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OpenQA.Selenium;
+using System.Text.RegularExpressions;
 
 namespace mantis_tests
 {
     public class RegistrationHelper : HelperBase
     {
+        String url;
         public RegistrationHelper(ApplicationManager manager) : base(manager) { }
 
         public void Register(AccountData account)
@@ -17,6 +19,28 @@ namespace mantis_tests
             OpenRegistrationForm();
             FillRegistrationForm(account);
             SubmintRegistrationForm();
+            String URL = GetConfirmationUrl(account);
+            FillPasswordForm(url, account);
+            SubmintPasswordForm();
+        }
+
+        private void SubmintPasswordForm()
+        {
+            driver.FindElement(By.XPath("input.button")).Click();
+        }
+
+        private void FillPasswordForm(string url, AccountData account)
+        {
+            driver.Url = url;
+            driver.FindElement(By.Name("password")).SendKeys(account.Password);
+            driver.FindElement(By.Name("password_confirm")).SendKeys(account.Password);
+        }
+
+        private string GetConfirmationUrl(AccountData account)
+        {
+            String message = manager.Mail.GetLastMail(account);
+            Match match = Regex.Match(message, @"http://\S*");
+            return match.Value;
         }
 
         private void OpenRegistrationForm()
