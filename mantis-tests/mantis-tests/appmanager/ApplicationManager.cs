@@ -14,9 +14,10 @@ namespace mantis_tests
     {
         protected IWebDriver driver;
         protected StringBuilder verificationErrors;
-
         private static ThreadLocal<ApplicationManager> app = new ThreadLocal<ApplicationManager>();
-
+        protected NavigationHelper navigationHelper;
+        protected LoginHelper loginHelper;
+        protected ProjectHelper projectHelper;
 
         private ApplicationManager()
         {
@@ -26,6 +27,9 @@ namespace mantis_tests
             FTP = new FTPHelper(this);
             James = new JamesHelper(this);
             Mail = new MailHelper(this);
+            navigationHelper = new NavigationHelper(this);
+            loginHelper = new LoginHelper(this);
+            projectHelper = new ProjectHelper(this);
         }
 
         ~ApplicationManager()
@@ -60,8 +64,35 @@ namespace mantis_tests
         }
 
         public RegistrationHelper Registration { get; set; }
+
         public FTPHelper FTP { get; set; }
+
         public JamesHelper James { get; set; }
+
         public MailHelper Mail { get; set; }
+        
+        public LoginHelper Auth
+        {
+            get
+            {
+                return loginHelper;
+            }
+        }
+
+        public NavigationHelper Navigator
+        {
+            get
+            {
+                return navigationHelper;
+            }
+        }
+
+        public ProjectHelper project
+        {
+            get
+            {
+                return projectHelper;
+            }
+        }
     }
 }
