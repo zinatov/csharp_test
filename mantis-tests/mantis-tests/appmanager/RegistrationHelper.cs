@@ -10,7 +10,6 @@ namespace mantis_tests
 {
     public class RegistrationHelper : HelperBase
     {
-        String url;
         public RegistrationHelper(ApplicationManager manager) : base(manager) { }
 
         public void Register(AccountData account)
@@ -20,7 +19,7 @@ namespace mantis_tests
             FillRegistrationForm(account);
             SubmintRegistrationForm();
             String URL = GetConfirmationUrl(account);
-            FillPasswordForm(url, account);
+            FillPasswordForm(URL, account);
             SubmintPasswordForm();
         }
 

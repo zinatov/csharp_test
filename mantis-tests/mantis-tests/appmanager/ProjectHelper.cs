@@ -17,18 +17,16 @@ namespace mantis_tests
 
         public List<ProjectData> GetAllFromUI()
         {
+            manager.Navigator.GoToProjectPage();
             if (projectCache == null)
             {
                 projectCache = new List<ProjectData>();
-                manager.Navigator.Open_Homepage();
-                manager.Navigator.GoToProjectPage();
-                int elements = driver.FindElements(By.CssSelector("td > a")).Count;
-                for (int i = 1; i <= elements; i++)
+                IList<IWebElement> rows = driver.FindElements(By.CssSelector("td a"));
+                foreach (IWebElement row in rows)
                 {
                     projectCache.Add(new ProjectData()
                     {
-                        Name = driver.FindElement(By.CssSelector("tbody > tr:nth-of-type(" + i + ") a")).Text, //доработать
-                        Description = driver.FindElement(By.CssSelector("tr:nth-of-type(" + i + ") > td:nth-of-type(5)")).Text
+                        Name = row.Text
                     });
                 }
             }
@@ -37,14 +35,12 @@ namespace mantis_tests
 
         public void ProjectElementVerification()
         {
-            manager.Navigator.Open_Homepage();
             manager.Navigator.GoToProjectPage();
             if (!IsProjectExist())
             {
                 ProjectData project = new ProjectData()
                 {
-                    Name = "adfasdf",
-                    Description = "1324123"
+                    Name = "adfasdf"
                 };
                 Creation(project);
             }
@@ -62,6 +58,7 @@ namespace mantis_tests
         {
             driver.FindElement(By.XPath("//input[@value='Удалить проект']")).Click();
             driver.FindElement(By.XPath("//input[@value='Удалить проект']")).Click();
+            projectCache = null;
         }
 
         private void OpenProject(int toBeRemoved)
@@ -81,6 +78,7 @@ namespace mantis_tests
         private void SubmintProjectModification()
         {
             driver.FindElement(By.XPath("//input[@value='Добавить проект']")).Click();
+            projectCache = null;
         }
 
         private void FillProjectModification(ProjectData project)
@@ -88,9 +86,6 @@ namespace mantis_tests
             driver.FindElement(By.Id("project-name")).Click();
             driver.FindElement(By.Id("project-name")).Clear();
             driver.FindElement(By.Id("project-name")).SendKeys(project.Name);
-            driver.FindElement(By.Id("project-description")).Click();
-            driver.FindElement(By.Id("project-description")).Clear();
-            driver.FindElement(By.Id("project-description")).SendKeys(project.Description);
         }
 
         private void InitProjectModification()

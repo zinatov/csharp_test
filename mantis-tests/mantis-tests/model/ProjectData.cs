@@ -14,18 +14,11 @@ namespace mantis_tests
 
         public string Name { get; set; }
 
-        public string Description { get; set; }
-
         public int CompareTo(ProjectData other)
         {
             if (Object.ReferenceEquals(other, null))
             {
                 return 1;
-            }
-
-            if (Name.CompareTo(other.Name) == 0)
-            {
-                return Description.CompareTo(other.Description);
             }
             return Name.CompareTo(other.Name);
         }
@@ -40,18 +33,17 @@ namespace mantis_tests
             {
                 return true;
             }
-            return Name == other.Name && Description == other.Description;
+            return Name == other.Name;
         }
 
         public override string ToString()
         {
-            return "name= " + Name
-                + "\ndescription= " + Description;
+            return "name= " + Name + "\n";
         }
 
         public override int GetHashCode()
         {
-            return Name.GetHashCode() + Description.GetHashCode();
+            return Name.GetHashCode();
         }
     }
 }

@@ -24,7 +24,7 @@ namespace mantis_tests
 
             List<ProjectData> newProjects = app.project.GetAllFromUI();
 
-          //  oldProjects.RemoveAt(toBeRemoved);
+            oldProjects.RemoveAt(toBeRemoved);
             oldProjects.Sort();
             newProjects.Sort();
             Assert.AreEqual(oldProjects, newProjects);

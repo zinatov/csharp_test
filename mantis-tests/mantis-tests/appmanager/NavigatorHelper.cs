@@ -32,8 +32,7 @@ namespace mantis_tests
             {
                 return;
             }
-            driver.FindElement(By.XPath("//div[@id='sidebar']/ul/li[7]/a/i")).Click();
-            driver.FindElement(By.LinkText("Управление проектами")).Click();
+            driver.Navigate().GoToUrl("http://localhost/mantisbt-2.18.0/manage_proj_page.php");
         }
     }
 }
