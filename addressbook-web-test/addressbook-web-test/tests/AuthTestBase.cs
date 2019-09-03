@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
 
-namespace WebAddressbookTests
+namespace CB_AutoTests
 {
     public class AuthTestBase : TestBase
     {

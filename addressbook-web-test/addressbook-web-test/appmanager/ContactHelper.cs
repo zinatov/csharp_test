@@ -2,341 +2,133 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
 
-namespace WebAddressbookTests
+namespace CB_AutoTests
 {
-    public class ContactHelper : HelperBase
+    public class ContractHelper : HelperBase
     {
-        public ContactHelper(ApplicationManager manager) : base(manager)  {
+        public ContractHelper(ApplicationManager manager) : base(manager)
+        {
         }
 
-        private List<ContactData> contactcache = null;
-
-        public List<ContactData> GetContactList()
+        public void ContractCreation()
         {
-            if (contactcache == null)
+            OpenContractCreateForm();
+            FillFormOnFirstTab();
+            //OpenNextTab();
+            //FillFormOnSecondTab();
+            //OpenNextTab();
+            //OpenNextTab();
+            //FillFormOnFouthTab();
+            //OpenNextTab();
+            //FillFormOnFifthTab();
+            //OpenNextTab();
+        }
+
+        public void FillFormOnFifthTab()
+        {   //заполнение данных на вкладке "Файлы"
+            Thread.Sleep(1000);
+            driver.FindElement(By.XPath("(.//*[normalize-space(text()) and normalize-space(.)='Этап'])[1]/following::a[1]")).Click();
+            driver.FindElement(By.XPath("(.//*[normalize-space(text()) and normalize-space(.)='Описание'])[1]/following::span[4]")).Click();
+            driver.FindElement(By.XPath("(.//*[normalize-space(text()) and normalize-space(.)='Выйти в реестр'])[1]/following::input[1]")).Clear();
+            driver.FindElement(By.XPath("(.//*[normalize-space(text()) and normalize-space(.)='Выйти в реестр'])[1]/following::input[1]")).SendKeys("авианакладная");
+            driver.FindElement(By.XPath("(.//*[normalize-space(text()) and normalize-space(.)='Выйти в реестр'])[1]/following::input[1]")).SendKeys(Keys.Enter);
+            driver.FindElement(By.XPath("(.//*[normalize-space(text()) and normalize-space(.)='select'])[14]/following::input[1]")).Click();
+            driver.FindElement(By.XPath("(.//*[normalize-space(text()) and normalize-space(.)='select'])[14]/following::input[1]")).Clear();
+            driver.FindElement(By.XPath("(.//*[normalize-space(text()) and normalize-space(.)='select'])[14]/following::input[1]")).SendKeys("Номер договора");
+            driver.FindElement(By.XPath("(.//*[normalize-space(text()) and normalize-space(.)='select'])[14]/following::input[1]")).SendKeys(Keys.Enter);
+            driver.FindElement(By.Id("AttachmentId_uploader")).SendKeys("D:\\1.txt");
+            driver.FindElement(By.CssSelector("a.k-button.k-button-icontext.k-primary.k-grid-update.icon.ic_update")).Click();
+        }
+
+        public void FillFormOnFouthTab()
+        {   //Заполнение данных на вкладке "Порядок расчета"
+            driver.FindElement(By.CssSelector("#paymentSchedules > div.k-header.k-grid-toolbar.k-grid-top > a.k-button.k-button-icontext.k-grid-add")).Click();
+            driver.FindElement(By.CssSelector("span[name=\"ExpenseName\"]")).Click();
+            driver.FindElement(By.XPath("(.//*[normalize-space(text()) and normalize-space(.)='[00000002]: СЗ в интересах административной деятельности'])[1]/preceding::span[1]")).Click();
+            Thread.Sleep(1000);
+            //driver.FindElement(By.CssSelector("td span span input")).Click();
+            //driver.FindElement(By.CssSelector("td span span input")).Clear();
+            driver.FindElement(By.CssSelector("td span span input")).SendKeys("1000");
+            driver.FindElement(By.LinkText("Обновить")).Click();
+        }
+
+        public void OpenNextTab()
+        {
+            driver.FindElement(By.LinkText("Далее")).Click();
+            if (IsElementPresent(By.CssSelector("input.cc-yes.k-button")))
             {
-                contactcache = new List<ContactData>();
-                manager.Navigator.Open_Homepage();
-                ICollection<IWebElement> elements = driver.FindElements(By.Name("entry"));
-                foreach (IWebElement element in elements)
-                {
-                    var cells = element.FindElements(By.CssSelector("td"));
-                    contactcache.Add(new ContactData(cells[2].Text, cells[1].Text)
-                    {
-                        Id = element.FindElement(By.TagName("input")).GetAttribute("value")
-                    });
-                }
+                driver.FindElement(By.CssSelector("input.cc-yes.k-button")).Click();
             }
-            return new List<ContactData>(contactcache);
         }
 
-        public void RemoveContactFromGroup(ContactData contact, GroupData group)
+        public void FillFormOnFirstTab()
+        {   //Заполнение данных на вкладке "Общие сведения"
+            String ContractNumberName = "Номер договора" + " " + (DateTime.Now).ToString();
+            String ContractDate = DateTime.Now.ToShortDateString();
+            driver.FindElement(By.Id("Number")).Click();
+            driver.FindElement(By.Id("Number")).Clear();
+            driver.FindElement(By.Id("Number")).SendKeys(ContractNumberName);
+            //Заполнение даты договора
+            driver.FindElement(By.XPath("//form[@id='mainform']/div/div[2]/div/span/span/span/span")).Click();
+            driver.FindElement(By.LinkText("1")).Click();
+            //Выбор способа закупки
+            driver.FindElement(By.XPath("//div[5]/div/span/span/span")).Click();
+            driver.FindElement(By.XPath("//ul[@id='PurchaseMethod_listbox']/li[1]")).Click();
+            //Выбор пользователя ответсвенного за договор
+            driver.FindElement(By.XPath("//span[@name='ResponsiblePersonName']")).Click();
+            driver.FindElement(By.Id("responsibleSearchValue")).Click();
+            driver.FindElement(By.Id("responsibleSearchValue")).Clear();
+            driver.FindElement(By.Id("responsibleSearchValue")).SendKeys("autotest_user");
+            driver.FindElement(By.XPath("//div[@id='responsiblePerson-window']/div/div/span/button/span")).Click();
+            WaitForElementLoad(By.XPath("//div[@id='responsiblePerson-grid']/table/tbody/tr/td"), 5000);
+            driver.FindElement(By.XPath("//div[@id='responsiblePerson-grid']/table/tbody/tr/td")).Click();
+
+            driver.FindElement(By.XPath("//form[@id='mainform']/div/div[12]/div/div/div/input")).Click();
+            driver.FindElement(By.CssSelector("span.k-icon.k-plus")).Click();
+            driver.FindElement(By.XPath("(.//*[normalize-space(text()) and normalize-space(.)='Северо-Западное главное управление Банка России'])[3]/preceding::span[2]")).Click();
+            driver.FindElement(By.Id("select-executing-departments")).Click();
+
+            //driver.FindElement(By.XPath("(.//*[normalize-space(text()) and normalize-space(.)='Перечень подразделений исполнителей'])[1]/following::input[1]")).Click();
+            //driver.FindElement(By.XPath("(.//*[normalize-space(text()) and normalize-space(.)='Close'])[3]/following::span[1]")).Click();
+            //driver.FindElement(By.XPath("(.//*[normalize-space(text()) and normalize-space(.)='Департаменты'])[1]/following::span[2]")).Click();
+            //driver.FindElement(By.Id("select-executing-departments")).Click();
+            driver.FindElement(By.Id("Subject")).Click();
+            driver.FindElement(By.Id("Subject")).Clear();
+            driver.FindElement(By.Id("Subject")).SendKeys("Предмет договора");
+            driver.FindElement(By.XPath("(.//*[normalize-space(text()) and normalize-space(.)='Поставщик (исполнитель, подрядчик)'])[1]/following::span[1]")).Click();
+            driver.FindElement(By.XPath("(.//*[normalize-space(text()) and normalize-space(.)='КПП'])[1]/following::td[1]")).Click();
+            driver.FindElement(By.XPath("(.//*[normalize-space(text()) and normalize-space(.)='Наименование документа'])[1]/following::span[3]")).Click();
+            driver.FindElement(By.XPath("(.//*[normalize-space(text()) and normalize-space(.)='не задано'])[6]/following::li[1]")).Click();
+            driver.FindElement(By.XPath("(.//*[normalize-space(text()) and normalize-space(.)='Вид договора'])[1]/following::span[3]")).Click();
+            driver.FindElement(By.XPath("(.//*[normalize-space(text()) and normalize-space(.)='договор на выполнение научно-исследовательских работ'])[1]/following::li[1]")).Click();
+            driver.FindElement(By.Id("Signatory")).Click();
+            driver.FindElement(By.Id("Signatory")).Clear();
+            driver.FindElement(By.Id("Signatory")).SendKeys("Подписант");
+            driver.FindElement(By.XPath("(.//*[normalize-space(text()) and normalize-space(.)='select'])[7]/following::span[4]")).Click();
+            driver.FindElement(By.XPath("(.//*[normalize-space(text()) and normalize-space(.)='Вс'])[2]/following::a[31]")).Click();
+        }
+
+        public void FillFormOnSecondTab()
         {
-            manager.Navigator.Open_Homepage();
-            setGroupFilter(group.Name);
-            SelectContact(contact.Id);
-            CommitDeleteContactFromGroup();
-            new WebDriverWait(driver, TimeSpan.FromSeconds(10)).Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0);
+            Thread.Sleep(3000);
+            driver.FindElement(By.LinkText("Добавить")).Click();
+            driver.FindElement(By.Id("ContractPrice")).Click();
+            driver.FindElement(By.Id("ContractPrice")).Clear();
+            driver.FindElement(By.Id("ContractPrice")).SendKeys("500000");
+            driver.FindElement(By.CssSelector("a.k-button.k-button-icontext.k-primary.k-grid-update.icon.ic_update")).Click();
+
         }
 
-        public void AddContactToGroup(ContactData contact, GroupData group)
+        public void OpenContractCreateForm()
         {
-            manager.Navigator.Open_Homepage();
-            ClearGroupFilter();
-            SelectContact(contact.Id);
-            SelectGroupToAdd(group.Name);
-            CommitAddingContactToGroup();
-            new WebDriverWait(driver, TimeSpan.FromSeconds(10)).Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0);
+            WaitForElementLoad(By.LinkText("Добавить"), 1000);
+            driver.FindElement(By.LinkText("Добавить")).Click();
         }
-
-        public void ContactElementVerification()
-        {
-            manager.Navigator.Open_Homepage();
-            if (!IsContactExist())
-            {
-                ContactData contact = new ContactData("for_test_1", "for_test_2");
-                Creation(contact);
-            }
-        }
-
-        public ContactHelper Remove(int v)
-        {
-            manager.Navigator.Open_Homepage();
-            SelectContact(v);
-            DeleteContact();
-            driver.SwitchTo().Alert().Accept();
-            return this;
-        }
-
-        public ContactHelper Remove(ContactData toBeRemoved)
-        {
-            manager.Navigator.Open_Homepage();
-            SelectContact(toBeRemoved.Id);
-            DeleteContact();
-            driver.SwitchTo().Alert().Accept();
-            return this;
-        }
-
-        public ContactHelper Modification(int v, ContactData newData)
-        {
-            manager.Navigator.Open_Homepage();
-            InitContactModification(v);
-            FillContactForm(newData);
-            SubmintContactModification();
-            manager.Navigator.Open_Homepage();
-            return this;
-        }
-
-        public ContactHelper Modified(ContactData toBeModify, ContactData newData)
-        {
-            manager.Navigator.Open_Homepage();
-            InitContactModification(toBeModify.Id);
-            FillContactForm(newData);
-            SubmintContactModification();
-            manager.Navigator.Open_Homepage();
-            return this;
-        }
-
-        public ContactHelper Creation(ContactData contact)
-        {
-            manager.Navigator.Open_Homepage();
-            InitContactCreation();
-            FillContactForm(contact);
-            SubmintContactCreation();         
-            manager.Navigator.GoToHomePage();
-            return this;
-        }
-        public ContactData GetContactInfoFromView(int v)
-        {
-            manager.Navigator.Open_Homepage();
-            IList<IWebElement> cells = driver.FindElements(By.Name("entry"))[v].FindElements(By.TagName("td"));
-            string lastName = cells[1].Text;
-            string firstName = cells[2].Text;
-            string address = cells[3].Text;
-            string allEmail = cells[4].Text;
-            string allPhones = cells[5].Text;
-
-            return new ContactData(firstName, lastName)
-            {
-                Address = address,
-                AllPhones = allPhones,
-                AllEmails = allEmail,
-            };
-        }
-
-        public int GetNumberOfSearchResult()
-        {
-            manager.Navigator.Open_Homepage();
-            string number = driver.FindElement(By.CssSelector("span#search_count")).Text;
-            return Int32.Parse(number);
-        }
-
-        public ContactData GetContactInfoFromEditForm(int v)
-        {
-            manager.Navigator.Open_Homepage();
-            InitContactModification(v);
-            string firstName = driver.FindElement(By.Name("firstname")).GetAttribute("value");
-            string lastName = driver.FindElement(By.Name("lastname")).GetAttribute("value");
-            string address = driver.FindElement(By.Name("address")).GetAttribute("value");
-
-            string homePhone = driver.FindElement(By.Name("home")).GetAttribute("value");
-            string mobilePhone = driver.FindElement(By.Name("mobile")).GetAttribute("value");
-            string workPhone = driver.FindElement(By.Name("work")).GetAttribute("value");
-            string secondPhone = driver.FindElement(By.Name("phone2")).GetAttribute("value");
-
-            string email1 = driver.FindElement(By.Name("email")).GetAttribute("value");
-            string email2 = driver.FindElement(By.Name("email2")).GetAttribute("value");
-            string email3 = driver.FindElement(By.Name("email3")).GetAttribute("value");
-
-            return new ContactData(firstName, lastName)
-            {
-                Address = address,
-                Home = homePhone,
-                Mobile = mobilePhone,
-                Work = workPhone,
-                Email1 = email1,
-                Email2 = email2,
-                Email3 = email3,
-                Phone2 = secondPhone
-            };
-        }
-
-        public string GetContactInfoFromEditFormForView(int v)
-        {
-            manager.Navigator.Open_Homepage();
-            InitContactModification(v);
-            string firstName = driver.FindElement(By.Name("firstname")).GetAttribute("value");
-            string middleName = driver.FindElement(By.Name("middlename")).GetAttribute("value");
-            string lastName = driver.FindElement(By.Name("lastname")).GetAttribute("value");
-            string nickName = driver.FindElement(By.Name("nickname")).GetAttribute("value");
-
-            string title = driver.FindElement(By.Name("title")).GetAttribute("value");
-            string company = driver.FindElement(By.Name("company")).GetAttribute("value");
-            string address = driver.FindElement(By.Name("address")).GetAttribute("value");
-
-            string homePhone = driver.FindElement(By.Name("home")).GetAttribute("value");
-            string mobilePhone = driver.FindElement(By.Name("mobile")).GetAttribute("value");
-            string workPhone = driver.FindElement(By.Name("work")).GetAttribute("value");
-            string fax = driver.FindElement(By.Name("fax")).GetAttribute("value");
-
-            string email1 = driver.FindElement(By.Name("email")).GetAttribute("value");
-            string email2 = driver.FindElement(By.Name("email2")).GetAttribute("value");
-            string email3 = driver.FindElement(By.Name("email3")).GetAttribute("value");
-
-            string homepage = driver.FindElement(By.Name("homepage")).GetAttribute("value");
-            string address2 = driver.FindElement(By.Name("address2")).GetAttribute("value");
-            string phone2 = driver.FindElement(By.Name("phone2")).GetAttribute("value");
-            string notes = driver.FindElement(By.Name("notes")).GetAttribute("value");
-
-
-            return (firstName + " " + middleName + " " + lastName + "\r\n"
-                         + nickName + "\r\n"
-                         + title + "\r\n"
-                         + company + "\r\n"
-                         + address + "\r\n\r\n"
-                         + "H: " + homePhone + "\r\n"
-                         + "M: " + mobilePhone + "\r\n"
-                         + "W: " + workPhone + "\r\n"
-                         + "F: " + fax + "\r\n\r\n"
-                         + email1 + "\r\n"
-                         + email2 + "\r\n"
-                         + email3 + "\r\n"
-                         + "Homepage:" + "\r\n" + homepage + "\r\n\r\n\r\n"
-                         + address2 + "\r\n\r\n"
-                         + "P: " + phone2 + "\r\n\r\n"
-                         + notes
-                         ).Trim();
-        }
-
-        public string GetContactInfoFromViewForm(int v)
-        {
-            manager.Navigator.Open_Homepage();
-            OpenContactViewForm(v);
-            string fullInfo = driver.FindElement(By.Id("content")).Text;
-            return fullInfo;
-        }
-
-
-        public ContactHelper OpenContactViewForm(int v)
-        {
-            driver.FindElement(By.XPath("(//img[@alt='Details'])[" + (v + 1) + "]")).Click();
-            return this;
-        }
-
-        public ContactHelper InitContactCreation()
-        {
-            driver.FindElement(By.LinkText("add new")).Click();
-            return this;
-        }
-
-        public ContactHelper FillContactForm(ContactData contact)
-        {
-            Type(By.Name("firstname"), contact.Name);
-            Type(By.Name("middlename"), contact.MiddleName);
-            Type(By.Name("lastname"), contact.LastName);
-            Type(By.Name("nickname"), contact.Nickname);
-            Type(By.Name("title"), contact.Title);
-            Type(By.Name("company"), contact.Company);
-            Type(By.Name("address"), contact.Address);
-            Type(By.Name("home"), contact.Home);
-            Type(By.Name("mobile"), contact.Mobile);
-            Type(By.Name("work"), contact.Work);
-            Type(By.Name("fax"), contact.Fax);
-            Type(By.Name("email"), contact.Email1);
-            Type(By.Name("email2"), contact.Email2);
-            Type(By.Name("email3"), contact.Email3);
-            Type(By.Name("homepage"), contact.HomePage);
-            Type(By.Name("address2"), contact.Address2);
-            Type(By.Name("phone2"), contact.Phone2);
-            Type(By.Name("notes"), contact.Notes);
-            return this;
-        }
-
-        public ContactHelper SelectContact(int v)
-        {
-            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + (v + 1) + "]")).Click();
-            return this;
-        }
-
-
-        public ContactHelper SelectContact(string contactId)
-        {
-            driver.FindElement(By.Id(contactId)).Click();
-            return this;
-        }
-
-        public ContactHelper DeleteContact()
-        {
-            driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
-            contactcache = null;
-            return this;
-        }
-
-        public ContactHelper InitContactModification(int v)
-        {
-            driver.FindElement(By.XPath("(//img[@alt='Edit'])[" + (v + 1) + "]")).Click();
-            return this;
-        }
-
-        public ContactHelper InitContactModification(string v)
-        {
-            string URL = "(//a[@href='edit.php?id="+ v + "'])"; 
-            driver.FindElement(By.XPath(URL)).Click();
-            return this;
-        }
-
-        public ContactHelper SubmintContactModification()
-        {
-            driver.FindElement(By.XPath("(//input[@name='update'])[2]")).Click();
-            contactcache = null;
-            return this;
-        }
-
-        public ContactHelper SubmintContactCreation()
-        {
-            driver.FindElement(By.XPath("(//input[@name='submit'])[2]")).Click();
-            contactcache = null;
-            return this;
-        }
-
-        public int GetContactCount()
-        {
-            return driver.FindElements(By.Name("entry")).Count;
-        }
-
-        private void CommitAddingContactToGroup()
-        {
-            driver.FindElement(By.Name("add")).Click();
-        }
-
-        private void SelectGroupToAdd(string name)
-        {
-            new SelectElement(driver.FindElement(By.Name("to_group"))).SelectByText(name);
-        }
-
-        private void ClearGroupFilter()
-        {
-            new SelectElement(driver.FindElement(By.Name("group"))).SelectByText("[all]");
-        }
-
-        private void CommitDeleteContactFromGroup()
-        {
-            driver.FindElement(By.Name("remove")).Click();
-        }
-
-        private void setGroupFilter(string name)
-        {
-            new SelectElement(driver.FindElement(By.Name("group"))).SelectByText(name);
-        }
-
-        private bool IsContactExist()
-        {
-            return IsElementPresent(By.Name("entry"));
-        }
-    }
+    }   
 }

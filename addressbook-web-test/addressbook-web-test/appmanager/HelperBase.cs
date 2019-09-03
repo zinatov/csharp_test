@@ -5,14 +5,17 @@ using System.Text;
 using System.Threading.Tasks;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
+using OpenQA.Selenium.IE;
 using OpenQA.Selenium.Support.UI;
 
-namespace WebAddressbookTests
+namespace CB_AutoTests
 {
     public class HelperBase
     {
         protected IWebDriver driver;
         protected ApplicationManager manager;
+        //Указать стенд на котором запускать автотесты
+        protected string PortNumberOfTestStand = "7003";
 
         public HelperBase(ApplicationManager manager)
         {
@@ -37,6 +40,15 @@ namespace WebAddressbookTests
             catch (NoSuchElementException)
             {
                 return false;
+            }
+        }
+
+        public void WaitForElementLoad(By by, int timeoutInSeconds)
+        {
+            if (timeoutInSeconds > 0)
+            {
+                WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(timeoutInSeconds));
+                wait.Until(c => c.FindElement(by));
             }
         }
     }

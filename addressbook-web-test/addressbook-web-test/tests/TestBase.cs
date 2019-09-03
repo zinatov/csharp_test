@@ -9,7 +9,7 @@ using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
 
 
-namespace WebAddressbookTests
+namespace CB_AutoTests
 {
     public class TestBase
     {

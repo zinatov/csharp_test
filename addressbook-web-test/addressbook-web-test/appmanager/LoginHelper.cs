@@ -8,7 +8,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
 
-namespace WebAddressbookTests
+namespace CB_AutoTests
 {
     public class LoginHelper : HelperBase
     {
@@ -27,14 +27,14 @@ namespace WebAddressbookTests
                 }
                 LogOut();
             }
-            Type(By.Name("user"), account.Username);
-            Type(By.Name("pass"), account.Password);
-            driver.FindElement(By.CssSelector("input[type=\"submit\"]")).Click();
+            Type(By.Name("User"), account.Username);
+            Type(By.Name("Password"), account.Password);
+            driver.FindElement(By.XPath("(//input[@value='Войти'])[2]")).Click();
         }
 
         public bool IsLoggedIn()
         {
-            return IsElementPresent(By.Name("logout"));
+            return IsElementPresent(By.Id("NotReadCount"));
         }
 
         public bool IsLoggedIn(AccountData account)
@@ -45,16 +45,15 @@ namespace WebAddressbookTests
 
         public string GetLoggetUserName()
         {
-            string text =  driver.FindElement(By.Name("logout")).FindElement(By.TagName("b")).Text;
-            return text.Substring(1, text.Length - 2);
-
+            string text = driver.FindElement(By.CssSelector("span.over_headerText")).Text;
+            return text.Substring(text.IndexOf('(') + 1, text.Length - 2 - text.IndexOf('('));
         }
 
         public void LogOut()
         {
             if (IsLoggedIn())
             {
-                driver.FindElement(By.LinkText("Logout")).Click();
+                driver.Url = "http://npaee.norbit.ru:" + PortNumberOfTestStand + "/Account/LogIn?sysconfig=1";
             }
         }
     }

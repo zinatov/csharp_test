@@ -5,32 +5,31 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Firefox;
+using OpenQA.Selenium.IE;
 using OpenQA.Selenium.Support.UI;
 
-namespace WebAddressbookTests
+namespace CB_AutoTests
 {
     public class ApplicationManager
     {
         protected LoginHelper loginHelper;
         protected NavigationHelper navigationHelper;
-        protected GroupHelper groupHelper;
-        protected ContactHelper contactHelper;
+        protected ContractHelper contractHelper;
         protected IWebDriver driver;
         protected StringBuilder verificationErrors;
+
 
         private static ThreadLocal<ApplicationManager> app = new ThreadLocal<ApplicationManager>();
 
 
         private ApplicationManager()
         {
-            driver = new FirefoxDriver();
+            driver = new InternetExplorerDriver();
             verificationErrors = new StringBuilder(); 
 
             loginHelper = new LoginHelper(this);
             navigationHelper = new NavigationHelper(this);
-            groupHelper = new GroupHelper(this);
-            contactHelper = new ContactHelper(this);
+            contractHelper = new ContractHelper(this);
         }
 
         ~ApplicationManager()
@@ -50,7 +49,7 @@ namespace WebAddressbookTests
             if (! app.IsValueCreated)
             {
                 ApplicationManager newInstasnce = new ApplicationManager();
-                newInstasnce.Navigator.Open_Homepage();
+                newInstasnce.Navigator.OpenAuthPage();
                 app.Value = newInstasnce;
             }
             return app.Value;
@@ -80,20 +79,12 @@ namespace WebAddressbookTests
             }
         }
 
-        public ContactHelper Contacts
+        public ContractHelper Contacts
         {
             get
             {
-                return contactHelper;
+                return contractHelper;
             }
          }
-
-        public GroupHelper Groups
-        {
-            get
-            {
-                return groupHelper;
-            }
-        }
     }
 }

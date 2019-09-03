@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading;
 using NUnit.Framework;
 
-namespace WebAddressbookTests
+namespace CB_AutoTests
 {
     [TestFixture]
     public class LoginTests : TestBase
