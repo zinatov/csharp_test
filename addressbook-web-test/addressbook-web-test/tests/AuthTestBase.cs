@@ -12,7 +12,7 @@ namespace CB_AutoTests
         [SetUp]
         public void SetupLogin()
         {
-            app.Auth.Login(new AccountData("admin", "secret"));
+            app.Auth.Login(new AccountData("autotest_user", "123"));
         }
     }
 }

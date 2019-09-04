@@ -17,7 +17,7 @@ namespace CB_AutoTests
             app.Auth.LogOut();
 
             // action
-            AccountData account = new AccountData("admin", "secret");
+            AccountData account = new AccountData("autotest_user", "123");
             app.Auth.Login(account);
 
             // verification
@@ -29,7 +29,7 @@ namespace CB_AutoTests
         {
             //prepare
             app.Auth.LogOut();
-            Thread.Sleep(2000);
+
             // action
             AccountData account = new AccountData("admin", "1234565");
             app.Auth.Login(account);

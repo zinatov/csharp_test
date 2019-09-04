@@ -43,6 +43,18 @@ namespace CB_AutoTests
             }
         }
 
+        public bool IsElementDispayed(By by)
+        {
+            try
+            {
+                return driver.FindElement(by).Displayed;
+            }
+            catch (NoSuchElementException e)
+            {
+                return false;
+            }
+        }
+
         public void WaitForElementLoad(By by, int timeoutInSeconds)
         {
             if (timeoutInSeconds > 0)

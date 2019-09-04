@@ -29,78 +29,79 @@ namespace CB_AutoTests
 
         public void OpenProcPlanningPage()
         {
-            driver.FindElement(By.XPath("(.//*[normalize-space(text()) and normalize-space(.)='Реестр потребностей'])[1]/preceding::h3[1]")).Click();
-            driver.FindElement(By.XPath("//a[contains(text(),'Реестр ГПЗ')]")).Click();
+            OpenContextMenu(By.Id("ui-accordion-main-header-8"), By.CssSelector("li#MI_ProcurementPlanRegister"));
         }
 
         public void OpenPlanItemPage()
         {
-            driver.FindElement(By.XPath("(.//*[normalize-space(text()) and normalize-space(.)='Реестр потребностей'])[1]/preceding::h3[1]")).Click();
-            driver.FindElement(By.XPath("//li[@id='MI_PlanItemAndLotRegister']/a")).Click();
+            OpenContextMenu(By.Id("ui-accordion-main-header-8"), By.CssSelector("li#MI_PlanItemAndLotRegister"));
         }
 
         public void OpenProcInitiatingPage()
         {
-            driver.FindElement(By.XPath("(.//*[normalize-space(text()) and normalize-space(.)='Заявки на закупку'])[1]/preceding::h3[1]")).Click();
-            driver.FindElement(By.XPath("(.//*[normalize-space(text()) and normalize-space(.)='Инициирование закупок'])[1]/following::a[1]")).Click();
+            OpenContextMenu(By.Id("ui-accordion-main-header-9"), By.CssSelector("li#MI_ProcurementInitiating"));
         }
 
         public void OpenPurchaseInformationPage()
         {
-            driver.FindElement(By.XPath("(.//*[normalize-space(text()) and normalize-space(.)='Реестр закупок'])[1]/preceding::h3[1]")).Click();
-            driver.FindElement(By.LinkText("Реестр закупок")).Click();
+            OpenContextMenu(By.Id("ui-accordion-main-header-10"), By.CssSelector("li#MI_PurchaseInformationRegister"));
         }
 
         public void OpenAgreementPage()
         {
-            driver.FindElement(By.XPath("(.//*[normalize-space(text()) and normalize-space(.)='Единый реестр договоров'])[2]/preceding::h3[1]")).Click();
-            driver.FindElement(By.XPath("(.//*[normalize-space(text()) and normalize-space(.)='Единый реестр договоров'])[1]/following::a[1]")).Click();
+            OpenContextMenu(By.Id("ui-accordion-main-header-15"), By.CssSelector("ul#Agreements li"));
         }
-
+        
         public void OpenDesirePage()
         {
-            driver.FindElement(By.XPath("(.//*[normalize-space(text()) and normalize-space(.)='Реестр потребностей'])[1]/preceding::h3[1]")).Click();
-            driver.FindElement(By.XPath("(.//*[normalize-space(text()) and normalize-space(.)='hidden'])[3]/following::a[1]")).Click();
+            OpenContextMenu(By.Id("ui-accordion-main-header-8"), By.CssSelector("li#MI_DesiresRegister"));
         }
 
         public void OpenPurchCommissionPage()
         {
-            driver.FindElement(By.Id("ui-accordion-main-header-11")).Click();
-            driver.FindElement(By.XPath("//a[contains(@href, '/References/PurchCommission')]")).Click();
+            OpenContextMenu(By.Id("ui-accordion-main-header-11"), By.XPath("//a[contains(@href, '/References/PurchCommission')]"));
         }
 
         public void OpenVotingConclusionPage()
         {
-            driver.FindElement(By.XPath("(//a[contains(@href, '/ZK/VotingConclusion')])[2]")).Click();
+            OpenContextMenu(By.Id("ui-accordion-main-header-11"), By.XPath("(//a[contains(@href, '/ZK/VotingConclusion')])[2]"));
         }
 
         public void OpenVotingAgendaPage()
         {
-            // driver.FindElement(By.Id("ui-accordion-main-header-11")).Click();
-            driver.FindElement(By.XPath("//a[contains(@href, '/ZK/VotingAgenda')]")).Click();
+            OpenContextMenu(By.Id("ui-accordion-main-header-11"), By.XPath("//a[contains(@href, '/ZK/VotingAgenda')]"));
         }
 
         public void OpenProtocolVotingConclusionPage()
         {
-            driver.FindElement(By.Id("ui-accordion-main-header-11")).Click();
-            driver.FindElement(By.XPath("//a[contains(@href, '/ZK/ProtocolVotingConclusion')]")).Click();
+            OpenContextMenu(By.Id("ui-accordion-main-header-11"), By.XPath("//a[contains(@href, '/ZK/VotingAgenda')]"));
         }
 
         public void OpenVotingBulletinPage()
         {
-            driver.FindElement(By.XPath("//a[contains(@href, '/ZK/VotingBulletin')]")).Click();
+            OpenContextMenu(By.Id("ui-accordion-main-header-11"), By.XPath("//a[contains(@href, '/ZK/VotingBulletin')]"));
         }
 
         public void OpenMemberPurchCommissionPage()
         {
-            driver.FindElement(By.Id("ui-accordion-main-header-11")).Click();
-            driver.FindElement(By.XPath("//a[contains(@href, '/References/MemberPurchCommission')]")).Click();
+            OpenContextMenu(By.Id("ui-accordion-main-header-11"), By.XPath("//a[contains(@href, '/References/MemberPurchCommission')]"));
         }
 
         public void OpenApprovingNoticeCompetitionPage()
         {
-            driver.FindElement(By.Id("ui-accordion-main-header-11")).Click();
-            driver.FindElement(By.XPath("//a[contains(@href, '/ZK/ApprovingNoticeCompetition')]")).Click();
+            OpenContextMenu(By.Id("ui-accordion-main-header-11"), By.XPath("//a[contains(@href, '/ZK/ApprovingNoticeCompetition')]"));
+        }
+
+        //Процедура открытия подпункта меню. 
+        //Например: для открытия реестра лотов и пз, проверяется, раскрыт ли пункт меню Планирование, 
+        //если да, то открывается подпункт меню "Реестр лотов и пз", если нет, то сначала раскрывается пункт меню "Реестр лотов и ПЗ
+        private void OpenContextMenu(By byMenu, By byContextMenu)
+        {
+            if (!IsElementDispayed(byContextMenu))
+            {
+                driver.FindElement(byMenu).Click();
+            }
+            driver.FindElement(byContextMenu).Click();
         }
     }
 }
