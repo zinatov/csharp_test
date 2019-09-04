@@ -51,10 +51,7 @@ namespace CB_AutoTests
 
         public void LogOut()
         {
-            if (IsLoggedIn())
-            {
-                driver.Url = "http://npaee.norbit.ru:" + PortNumberOfTestStand + "/Account/LogIn?sysconfig=1";
-            }
+            driver.Url = "http://npaee.norbit.ru:" + PortNumberOfTestStand + "/Account/LogIn?sysconfig=1";
         }
     }
 }

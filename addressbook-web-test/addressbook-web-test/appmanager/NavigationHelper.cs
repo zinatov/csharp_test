@@ -20,6 +20,18 @@ namespace CB_AutoTests
             driver.Manage().Window.Maximize();
             driver.Url = "http://npaee.norbit.ru:" + PortNumberOfTestStand + "/Account/LogIn?sysconfig=1";
         }
+        
+        //Процедура открытия подпункта меню. 
+        //Например: для открытия реестра лотов и пз, проверяется, раскрыт ли пункт меню Планирование, 
+        //если да, то открывается подпункт меню "Реестр лотов и пз", если нет, то сначала раскрывается пункт меню "Реестр лотов и ПЗ"
+        private void OpenContextMenu(By byMenu, By byContextMenu)
+        {
+            if (!IsElementDispayed(byContextMenu))
+            {
+                driver.FindElement(byMenu).Click();
+            }
+            driver.FindElement(byContextMenu).Click();
+        }
 
         public string TitleTextFromPage(By by)
         {
@@ -92,16 +104,40 @@ namespace CB_AutoTests
             OpenContextMenu(By.Id("ui-accordion-main-header-11"), By.XPath("//a[contains(@href, '/ZK/ApprovingNoticeCompetition')]"));
         }
 
-        //Процедура открытия подпункта меню. 
-        //Например: для открытия реестра лотов и пз, проверяется, раскрыт ли пункт меню Планирование, 
-        //если да, то открывается подпункт меню "Реестр лотов и пз", если нет, то сначала раскрывается пункт меню "Реестр лотов и ПЗ
-        private void OpenContextMenu(By byMenu, By byContextMenu)
+
+        public void OpenPrescriptionPage()
         {
-            if (!IsElementDispayed(byContextMenu))
-            {
-                driver.FindElement(byMenu).Click();
-            }
-            driver.FindElement(byContextMenu).Click();
+            OpenContextMenu(By.Id("ui-accordion-main-header-17"), By.CssSelector("li#MI_Prescription"));
+        }
+
+        public void OpenBreakingPage()
+        {
+            OpenContextMenu(By.Id("ui-accordion-main-header-17"), By.CssSelector("li#MI_Breaking"));
+        }
+
+        public void OpenComplaintPage()
+        {
+            OpenContextMenu(By.Id("ui-accordion-main-header-18"), By.CssSelector("li#MI_Complaint"));
+        }
+
+        public void OpenComplaintSolutionPage()
+        {
+            OpenContextMenu(By.Id("ui-accordion-main-header-18"), By.CssSelector("li#MI_ComplaintSolution"));
+        }
+
+        public void OpenSupplierRegistryPage()
+        {
+            OpenContextMenu(By.Id("ui-accordion-main-header-19"), By.CssSelector("li#MI_SupplierRegistry"));
+        }
+
+        public void OpenApplicationContractorPage()
+        {
+            OpenContextMenu(By.Id("ui-accordion-main-header-19"), By.CssSelector("li#MI_ApplicationContractor"));
+        }
+
+        public void OpenProjectPurchCommissionPage()
+        {
+            OpenContextMenu(By.Id("ui-accordion-main-header-20"), By.CssSelector("li#MI_ProjectPurchCommission"));
         }
     }
 }

@@ -20,7 +20,6 @@ namespace CB_AutoTests
             Assert.AreEqual(app.Navigator.TitleTextFromPage(By.CssSelector("h2.h4")), "Реестр потребностей");
         }
 
-
         [Test]
         public void OpenAgreementPageTest()
         {   //Проверка открытия ЕРД
@@ -98,5 +97,57 @@ namespace CB_AutoTests
             app.Navigator.OpenApprovingNoticeCompetitionPage();
             Assert.AreEqual(app.Navigator.TitleTextFromPage(By.CssSelector("div.main-center-authorized.mainmenu-margin > h2")), "Утверждение извещений");
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        [Test]
+        public void OpenBreakingPageTest()
+        {   //Проверка открытия реестра Нарушения
+            app.Navigator.OpenBreakingPage();
+            Assert.AreEqual(app.Navigator.TitleTextFromPage(By.CssSelector("div.main-center-authorized.mainmenu-margin > h2")), "Нарушения");
+        }
+
+        [Test]
+        public void OpenPrescriptionPageTest()
+        {   //Проверка открытия реестра предписаний
+            app.Navigator.OpenPrescriptionPage();
+            Assert.AreEqual(app.Navigator.TitleTextFromPage(By.CssSelector("div.main-center-authorized.mainmenu-margin > h2")), "Реестр предписаний");
+        }
+
+        [Test]
+        public void OpenComplaintPageTest()
+        {   //Проверка открытия реестра жалоб
+            app.Navigator.OpenComplaintPage();
+            Assert.AreEqual(app.Navigator.TitleTextFromPage(By.CssSelector("div.main-center-authorized.mainmenu-margin > h2")), "Жалобы");
+        }
+
+        [Test]
+        public void OpenComplaintSolutionPageTest()
+        {   //Проверка открытия реестра решений по жалобам
+            app.Navigator.OpenComplaintSolutionPage();
+            Assert.AreEqual(app.Navigator.TitleTextFromPage(By.CssSelector("div.main-center-authorized.mainmenu-margin > h2")), "Решения по жалобе");
+        }
+
+        [Test]
+        public void OpenSupplierRegistryPageTest()
+        {   //Проверка открытия реестра Реестр поставщиков
+            app.Navigator.OpenSupplierRegistryPage();
+            Assert.AreEqual(app.Navigator.TitleTextFromPage(By.CssSelector("div.main-center-authorized.mainmenu-margin > h2")), "Реестр поставщиков");
+        }
+
+        [Test]
+        public void OpenApplicationContractorPageTest()
+        {   //Проверка открытия реестра недобросовестных поставщиков
+            app.Navigator.OpenApplicationContractorPage();
+            Assert.AreEqual(app.Navigator.TitleTextFromPage(By.CssSelector("li#UnfairContractorIncluded a")), "Реестр недобросовестных поставщиков");
+        }
+
+        [Test]
+        public void OpenProjectPurchCommissionPageTest()
+        {   //Проверка открытия реестра проекта изменений комиссиий
+            app.Navigator.OpenProjectPurchCommissionPage();
+            Assert.AreEqual(app.Navigator.TitleTextFromPage(By.CssSelector("div.main-center-authorized.mainmenu-margin > h2")), "Проекты изменений комиссий");
+        }
+
     }
 }

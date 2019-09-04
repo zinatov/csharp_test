@@ -88,16 +88,12 @@ namespace CB_AutoTests
             driver.FindElement(By.XPath("//div[@id='responsiblePerson-window']/div/div/span/button/span")).Click();
             WaitForElementLoad(By.XPath("//div[@id='responsiblePerson-grid']/table/tbody/tr/td"), 5000);
             driver.FindElement(By.XPath("//div[@id='responsiblePerson-grid']/table/tbody/tr/td")).Click();
-
+            //Выбор подразделения исполнителя
             driver.FindElement(By.XPath("//form[@id='mainform']/div/div[12]/div/div/div/input")).Click();
             driver.FindElement(By.CssSelector("span.k-icon.k-plus")).Click();
-            driver.FindElement(By.XPath("(.//*[normalize-space(text()) and normalize-space(.)='Северо-Западное главное управление Банка России'])[3]/preceding::span[2]")).Click();
+            driver.FindElement(By.CssSelector("ul.k-group span.k-state-selected-item")).Click();
             driver.FindElement(By.Id("select-executing-departments")).Click();
-
-            //driver.FindElement(By.XPath("(.//*[normalize-space(text()) and normalize-space(.)='Перечень подразделений исполнителей'])[1]/following::input[1]")).Click();
-            //driver.FindElement(By.XPath("(.//*[normalize-space(text()) and normalize-space(.)='Close'])[3]/following::span[1]")).Click();
-            //driver.FindElement(By.XPath("(.//*[normalize-space(text()) and normalize-space(.)='Департаменты'])[1]/following::span[2]")).Click();
-            //driver.FindElement(By.Id("select-executing-departments")).Click();
+            //Заполнение поля Предмет договора
             driver.FindElement(By.Id("Subject")).Click();
             driver.FindElement(By.Id("Subject")).Clear();
             driver.FindElement(By.Id("Subject")).SendKeys("Предмет договора");
@@ -127,7 +123,7 @@ namespace CB_AutoTests
 
         public void OpenContractCreateForm()
         {
-            WaitForElementLoad(By.LinkText("Добавить"), 1000);
+            WaitForElementLoad(By.LinkText("Добавить"), 5000);
             driver.FindElement(By.LinkText("Добавить")).Click();
         }
     }   

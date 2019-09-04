@@ -14,7 +14,7 @@ namespace CB_AutoTests
         public void ContractCreationTest()
         {
             app.Navigator.OpenAgreementPage();
-            //app.Contacts.ContractCreation();
+            app.Contacts.ContractCreation();
         }
     }
 }
