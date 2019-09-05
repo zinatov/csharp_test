@@ -79,7 +79,7 @@ namespace CB_AutoTests
             }
         }
 
-        public ContractHelper Contacts
+        public ContractHelper Contracts
         {
             get
             {

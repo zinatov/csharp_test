@@ -104,7 +104,6 @@ namespace CB_AutoTests
             OpenContextMenu(By.Id("ui-accordion-main-header-11"), By.XPath("//a[contains(@href, '/ZK/ApprovingNoticeCompetition')]"));
         }
 
-
         public void OpenPrescriptionPage()
         {
             OpenContextMenu(By.Id("ui-accordion-main-header-17"), By.CssSelector("li#MI_Prescription"));
