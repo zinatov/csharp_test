@@ -72,6 +72,7 @@
   <ItemGroup>
     <Compile Include="model\AccountData.cs" />
     <Compile Include="appmanager\ApplicationManager.cs" />
+    <Compile Include="model\ContractData.cs" />
     <Compile Include="tests\AuthTestBase.cs" />
     <Compile Include="appmanager\ContactHelper.cs" />
     <Compile Include="appmanager\HelperBase.cs" />
