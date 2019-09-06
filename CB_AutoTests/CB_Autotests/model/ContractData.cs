@@ -13,6 +13,17 @@ namespace CB_AutoTests
         {
         }
 
+        private string contractNumberAndDate;
+
+        public string CleanUp(string text)
+        {
+            if (text == null || text == "")
+            {
+                return "";
+            }
+            return Regex.Replace(text, "[ -()]", "");
+        }
+
         public int CompareTo(ContractData other)
         {
             if (Object.ReferenceEquals(other, null))
@@ -27,7 +38,6 @@ namespace CB_AutoTests
             return ContractNumber.CompareTo(other.ContractNumber);
         }
 
-
         public bool Equals(ContractData other)
         {
             if (object.ReferenceEquals(other, null))
@@ -39,6 +49,21 @@ namespace CB_AutoTests
                 return true;
             }
             return ContractPrice == other.ContractPrice && ContractNumber == other.ContractNumber;
+        }
+
+        public string ContractNumberAndDate
+        {
+            get
+            {
+                if (contractNumberAndDate != null)
+                {
+                    return contractNumberAndDate;
+                }
+                else
+                {
+                    return "№ " + (CleanUp(ContractNumber)) + " от " + (CleanUp(ContractDateDay)) + ".09.2019";
+                }
+            }
         }
 
         public string ContractNumber { get; set; }

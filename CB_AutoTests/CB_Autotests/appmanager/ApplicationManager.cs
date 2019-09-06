@@ -18,7 +18,6 @@ namespace CB_AutoTests
         protected IWebDriver driver;
         protected StringBuilder verificationErrors;
 
-
         private static ThreadLocal<ApplicationManager> app = new ThreadLocal<ApplicationManager>();
 
 
@@ -26,7 +25,6 @@ namespace CB_AutoTests
         {
             driver = new InternetExplorerDriver();
             verificationErrors = new StringBuilder(); 
-
             loginHelper = new LoginHelper(this);
             navigationHelper = new NavigationHelper(this);
             contractHelper = new ContractHelper(this);

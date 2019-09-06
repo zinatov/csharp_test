@@ -16,6 +16,22 @@ namespace CB_AutoTests
         {
         }
 
+        //public List<ContractData> GetContractListOnPage()
+        //{
+        //    List<ContractData> contracts = new List<ContractData>();
+        //    ContractFilterClear();
+        //    ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("tr.tr-"));
+        //    foreach (IWebElement element in elements)
+        //    {
+        //        var cells = element.FindElements(By.CssSelector("td"));
+        //        contracts.Add(new ContractData()
+        //        {
+        //            ContractNumberAndDate = element.FindElement();
+        //        });
+        //    }
+        //    return contracts;
+        //}
+
         public void ContractCreation(ContractData contract)
         {
             OpenContractCreateForm();
@@ -24,34 +40,47 @@ namespace CB_AutoTests
             FillFormOnSecondTab(contract);
             OpenNextTab();
             OpenNextTab();
-           // FillFormOnFouthTab(contract);
+            FillFormOnFouthTab(contract);
             OpenNextTab();
             FillFormOnFifthTab(contract);
             OpenNextTab();
             CloseContractCreationForm();
+
+        }
+
+        public void ContractFilterClear()
+        {
+            if (driver.Url != "http://npaee.norbit.ru:" + PortNumberOfTestStand + "/Agreement/AgreementRegister")
+            {
+                manager.Navigator.OpenAgreementPage();
+            }
+            driver.FindElement(By.CssSelector("a.k-link.k-header")).Click();
+            driver.FindElement(By.Id("clearButton")).Click();
+            driver.FindElement(By.Id("filterButton")).Click();
+            driver.FindElement(By.CssSelector("a.k-link.k-header")).Click();
         }
 
         public void ContractRegistry()  //Зарегистрировать догоовр через подчтрочное меню реестра
         {
-            WaitForElementLoad(By.LinkText("Зарегистрировать"), 10000);
+            WaitForElementLoad(By.LinkText("Зарегистрировать"), 10);
             driver.FindElement(By.LinkText("Зарегистрировать")).Click();
         }
 
         public void UserActionLog()  //Отркытие формы просмотра журнала объекта 
         {
-            WaitForElementLoad(By.LinkText("Журнал объекта"), 10000);
+            WaitForElementLoad(By.LinkText("Журнал объекта"), 10);
             driver.FindElement(By.LinkText("Журнал объекта")).Click();
         }
 
         public void OpenContractInfo()
         {
-            WaitForElementLoad(By.LinkText("Сведения договора"), 10000);
+            WaitForElementLoad(By.LinkText("Сведения договора"), 10);
             driver.FindElement(By.LinkText("Сведения договора")).Click();
         } //Открыть форму просмотра сведений договора
 
         public void ContractRemove()  //Удаление договора
         {
-            WaitForElementLoad(By.LinkText("Журнал объекта"), 10000);
+            WaitForElementLoad(By.LinkText("Журнал объекта"), 10);
             driver.FindElement(By.XPath("//a[contains(text(),'Удалить')]")).Click();
         }
 
@@ -68,18 +97,13 @@ namespace CB_AutoTests
 
         public void FillFormOnFifthTab(ContractData contract)   //заполнение данных на вкладке "Файлы"
         {   
-            Thread.Sleep(1000);
+            WaitForElementLoad(By.XPath("(//a[contains(text(),'Добавить')])[5]"), 10);
             driver.FindElement(By.XPath("(//a[contains(text(),'Добавить')])[5]")).Click();
-            //driver.FindElement(By.CssSelector("tr.k-grid-edit-row span.k-icon.k-i-arrow-s")).Click();
-            //driver.FindElement(By.CssSelector("#AttachmentType-list > span.k-list-filter > input.k-textbox")).Clear();
-            //driver.FindElement(By.CssSelector("#AttachmentType-list > span.k-list-filter > input.k-textbox")).SendKeys(contract.ContractDocumentType);
-            Type(By.CssSelector("#AttachmentType-list > span.k-list-filter > input.k-textbox"), contract.ContractDocumentType);
+            driver.FindElement(By.CssSelector("tr.k-grid-edit-row span.k-icon.k-i-arrow-s")).Click();
+            driver.FindElement(By.CssSelector("#AttachmentType-list > span.k-list-filter > input.k-textbox")).Clear();
+            driver.FindElement(By.CssSelector("#AttachmentType-list > span.k-list-filter > input.k-textbox")).SendKeys(contract.ContractDocumentType);
             driver.FindElement(By.CssSelector("#AttachmentType-list > span.k-list-filter > input.k-textbox")).SendKeys(Keys.Enter);
-
-            driver.FindElement(By.XPath("(.//*[normalize-space(text()) and normalize-space(.)='select'])[14]/following::input[1]")).Click();
-            driver.FindElement(By.XPath("(.//*[normalize-space(text()) and normalize-space(.)='select'])[14]/following::input[1]")).Clear();
-            driver.FindElement(By.XPath("(.//*[normalize-space(text()) and normalize-space(.)='select'])[14]/following::input[1]")).SendKeys(contract.ContractDocumentNumberType);
-            Type(By.XPath("(.//*[normalize-space(text()) and normalize-space(.)='select'])[14]/following::input[1]")), contract.ContractDocumentNumberType);
+            Type(By.XPath("(.//*[normalize-space(text()) and normalize-space(.)='select'])[14]/following::input[1]"), contract.ContractDocumentNumberType);
             driver.FindElement(By.XPath("(.//*[normalize-space(text()) and normalize-space(.)='select'])[14]/following::input[1]")).SendKeys(Keys.Enter);
             driver.FindElement(By.Id("AttachmentId_uploader")).SendKeys("D:\\1.txt");
             driver.FindElement(By.CssSelector("a.k-button.k-button-icontext.k-primary.k-grid-update.icon.ic_update")).Click();
@@ -90,8 +114,8 @@ namespace CB_AutoTests
             driver.FindElement(By.CssSelector("#paymentSchedules > div.k-header.k-grid-toolbar.k-grid-top > a.k-button.k-button-icontext.k-grid-add")).Click();
             driver.FindElement(By.CssSelector("span[name=\"ExpenseName\"]")).Click();
             driver.FindElement(By.XPath("(.//*[normalize-space(text()) and normalize-space(.)='[00000002]: СЗ в интересах административной деятельности'])[1]/preceding::span[1]")).Click();
-            WaitForElementLoad(By.CssSelector("input#ComplexPrice_Value"), 10000);
-            Type(By.CssSelector("input#ComplexPrice_Value"), contract.ContractPaymentShedulePrice);
+            WaitForElementLoad(By.CssSelector("input#ComplexPrice_Value"), 10);
+            driver.FindElement(By.CssSelector("input.k-formatted-value.required.width100.cppu-price-value.k-input")).SendKeys(contract.ContractPaymentShedulePrice);
             driver.FindElement(By.LinkText("Обновить")).Click();
         }
 
@@ -118,9 +142,8 @@ namespace CB_AutoTests
             //Выбор пользователя ответсвенного за договор
             driver.FindElement(By.XPath("//span[@name='ResponsiblePersonName']")).Click();
             Type(By.Id("responsibleSearchValue"), contract.ResponsiblePersonName);
-
             driver.FindElement(By.XPath("//div[@id='responsiblePerson-window']/div/div/span/button/span")).Click();
-            WaitForElementLoad(By.CssSelector("div#responsiblePerson-window tbody td"), 5000);
+            WaitForElementLoad(By.CssSelector("div#responsiblePerson-window tbody td"), 10);
             driver.FindElement(By.CssSelector("div#responsiblePerson-window tbody td")).Click();
             //Выбор подразделения исполнителя
             driver.FindElement(By.XPath("//form[@id='mainform']/div/div[12]/div/div/div/input")).Click();
@@ -138,20 +161,16 @@ namespace CB_AutoTests
             driver.FindElement(By.XPath("(.//*[normalize-space(text()) and normalize-space(.)='Вид договора'])[1]/following::span[3]")).Click();
             driver.FindElement(By.XPath("(.//*[normalize-space(text()) and normalize-space(.)='договор на выполнение научно-исследовательских работ'])[1]/following::li[1]")).Click();
             Type(By.Id("Signatory"), contract.Signatory);
-
             driver.FindElement(By.XPath("(.//*[normalize-space(text()) and normalize-space(.)='select'])[7]/following::span[4]")).Click();
             driver.FindElement(By.XPath("(.//*[normalize-space(text()) and normalize-space(.)='Вс'])[2]/following::a[31]")).Click();
         }
 
         public void FillFormOnSecondTab(ContractData contract)   //Заполнение данных на вкладке "Цена договора"
         {
-            Thread.Sleep(3000);
-            driver.FindElement(By.LinkText("Добавить")).Click();
-            //driver.FindElement(By.Id("ContractPrice")).Click();
-            //driver.FindElement(By.Id("ContractPrice")).Clear();
-            //driver.FindElement(By.Id("ContractPrice")).SendKeys("500000");
+            WaitForElementLoad(By.CssSelector("div#contractPricesGrid a.k-button.k-button.k-grid-add"), 10);
+            driver.FindElement(By.CssSelector("div#contractPricesGrid a.k-button.k-button.k-grid-add")).Click();
             Type(By.Id("ContractPrice"), contract.ContractPrice);
-           // Type(By.Id("VatPrice"), contract.ContractNDSPrice);
+            //driver.FindElement(By.CssSelector("input#VatPrice")).SendKeys(contract.ContractNDSPrice);
             driver.FindElement(By.CssSelector("a.k-button.k-button-icontext.k-primary.k-grid-update.icon.ic_update")).Click();
 
         }

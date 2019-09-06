@@ -81,5 +81,13 @@ namespace CB_AutoTests
          //   Assert.AreEqual(app.Navigator.TitleTextFromPage(By.CssSelector("h2.h4")), "Журнал операций");
         }
 
+        [Test]
+        public void Testmethod()
+        {
+            app.Navigator.OpenAgreementPage();
+            app.Contracts.ContractFilterClear();
+            Thread.Sleep(1000);
+        }
+
     }
 }

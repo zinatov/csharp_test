@@ -10,6 +10,7 @@ namespace CB_AutoTests
     public class AuthTestBase : TestBase
     {
         [SetUp]
+
         public void SetupLogin()
         {
             app.Auth.Login(new AccountData("autotest_user", "123"));
