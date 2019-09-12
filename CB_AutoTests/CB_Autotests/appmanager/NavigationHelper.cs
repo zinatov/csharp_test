@@ -11,7 +11,7 @@ namespace CB_AutoTests
 {
     public class NavigationHelper : HelperBase
     {
-        public NavigationHelper(ApplicationManager manager) :base(manager)
+        public NavigationHelper(ApplicationManager manager) : base(manager)
         {
         }
 
@@ -20,7 +20,7 @@ namespace CB_AutoTests
             driver.Manage().Window.Maximize();
             driver.Url = "http://npaee.norbit.ru:" + PortNumberOfTestStand + "/Account/LogIn?sysconfig=1";
         }
-        
+
         //Процедура открытия подпункта меню. 
         //Например: для открытия реестра лотов и пз, проверяется, раскрыт ли пункт меню Планирование, 
         //если да, то открывается подпункт меню "Реестр лотов и пз", если нет, то сначала раскрывается пункт меню "Реестр лотов и ПЗ"
@@ -33,9 +33,17 @@ namespace CB_AutoTests
             driver.FindElement(byContextMenu).Click();
         }
 
-        public string TitleTextFromPage(By by)
+        public string TitleTextFromPage()
         {
-            string TitleText = driver.FindElement(by).Text;
+            string TitleText;
+            if (IsElementPresent(By.CssSelector("h2.h4")))
+            {
+                TitleText = driver.FindElement(By.CssSelector("h2.h4")).Text;
+            }
+            else
+            {
+                TitleText = driver.FindElement(By.CssSelector("div.main-center-authorized.mainmenu-margin > h2")).Text;
+            }
             return TitleText;
         }
 
@@ -63,7 +71,7 @@ namespace CB_AutoTests
         {
             OpenContextMenu(By.Id("ui-accordion-main-header-15"), By.CssSelector("ul#Agreements li"));
         }
-        
+
         public void OpenDesirePage()
         {
             OpenContextMenu(By.Id("ui-accordion-main-header-8"), By.CssSelector("li#MI_DesiresRegister"));
@@ -137,6 +145,236 @@ namespace CB_AutoTests
         public void OpenProjectPurchCommissionPage()
         {
             OpenContextMenu(By.Id("ui-accordion-main-header-20"), By.CssSelector("li#MI_ProjectPurchCommission"));
+        }
+
+        public void OpenCalendarEventsPage()
+        {
+            OpenContextMenu(By.Id("ui-accordion-main-header-0"), By.CssSelector("li#MI_CalendarEvents"));
+        }
+
+        public void OpenBackgroundTasksPage()
+        {
+            OpenContextMenu(By.Id("ui-accordion-main-header-0"), By.CssSelector("li#MI_CalendarEvents a.ui-id-3"));
+        }
+
+        public void OpenUsersPage()
+        {
+            OpenContextMenu(By.Id("ui-accordion-main-header-1"), By.CssSelector("li#MI_Users"));
+        }
+
+        public void OpenRolesPage()
+        {
+            OpenContextMenu(By.Id("ui-accordion-main-header-1"), By.CssSelector("li#MI_Roles"));
+        }
+
+        public void OpenOperationsPage()
+        {
+            OpenContextMenu(By.Id("ui-accordion-main-header-1"), By.CssSelector("li#MI_Operations"));
+        }
+
+        public void OpenLogPage()
+        {
+            OpenContextMenu(By.Id("ui-accordion-main-header-1"), By.CssSelector("li#MI_Log"));
+        }
+
+        public void OpenIntegrationInboxPage()
+        {
+            OpenContextMenu(By.Id("ui-accordion-main-header-2"), By.CssSelector("li#MI_Exchange_Inbox"));
+        }
+
+        public void OpenIntegrationOutboxPage()
+        {
+            OpenContextMenu(By.Id("ui-accordion-main-header-2"), By.CssSelector("li#MI_Exchange_Outbox"));
+        }
+
+        public void OpenETPIntegrationPage()
+        {
+            OpenContextMenu(By.Id("ui-accordion-main-header-2"), By.CssSelector("li#MI_ETPIntegrationLog"));
+        }
+
+        public void OpenServiceBusPage()
+        {
+            OpenContextMenu(By.Id("ui-accordion-main-header-2"), By.CssSelector("li#MI_ServiceBusHub_Index"));
+        }
+
+        internal void OpenTypePurchCommissionsPage()
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void OpenPenaltyReasonPage()
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void OpenContractTerminationReasonPage()
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void OpenPointProductionPurchasePage()
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void OpenAreasOfBankingActivityPage()
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void OpenGoodsWorksServicesPage()
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void OpenExpensePage()
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void OpenFailedPurchaseReasonPage()
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void OpenBreakingRulesTypesPage()
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void OpenOrganizationsScopePage()
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void OpenExchangeRatesPage()
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void OpenStatusPurchasePage()
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void OpenOrganizationsPage()
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void OpenActivityKindsPage()
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void OpenWorkingStagesPage()
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void OpenRejectionReasonsPage()
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void OpenOrganizations_IndexContractorsPage()
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void OpenAccreditedItemsPage()
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void OpenPetitionsPage()
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void OpenAdjustmentReasonPage()
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void OpenExpertOpinionsPage()
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void OpenConditionComplaintPage()
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void OpenProductCategoryPage()
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void OpenCategoryStrategiesPage()
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void OpenProductCategoriesPage()
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void OpenContractsTypesPage()
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void OpenVotingQuestionTypesPage()
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void OpenVotingConclusionTypePage()
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void OpenComplaintReasonsPage()
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void OpenCoordinationLogicControlPage()
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void OpenPurchaseEventTypePage()
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void OpenSAPStatusLotPage()
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void OpenRequirementsPage()
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void OpenTableColumnHintPage()
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void OpenSelectEvalCriteriasPage()
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void OpenAssessmentDirectionsPage()
+        {
+            throw new NotImplementedException();
         }
     }
 }

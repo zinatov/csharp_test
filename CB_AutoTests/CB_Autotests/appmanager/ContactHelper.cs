@@ -26,9 +26,9 @@ namespace CB_AutoTests
         //        var cells = element.FindElements(By.CssSelector("td"));
         //        contracts.Add(new ContractData()
         //        {
-        //            ContractNumberAndDate = element.FindElement();
+        //            contractNumberAndDate = element.FindElement()
         //        });
-        //    }
+        //     }
         //    return contracts;
         //}
 
@@ -80,7 +80,7 @@ namespace CB_AutoTests
 
         public void ContractRemove()  //Удаление договора
         {
-            WaitForElementLoad(By.LinkText("Журнал объекта"), 10);
+            WaitForElementLoad(By.XPath("//a[contains(text(),'Удалить')]"), 10);
             driver.FindElement(By.XPath("//a[contains(text(),'Удалить')]")).Click();
         }
 
@@ -93,6 +93,12 @@ namespace CB_AutoTests
         public void CloseContractCreationForm() //Закрыть форму создания догвора
         {
             driver.FindElement(By.Name("saveAndExit")).Click();
+        }
+
+        public void ContractExecute()
+        {
+            WaitForElementLoad(By.LinkText("Журнал объекта"), 10);
+            driver.FindElement(By.XPath("//a[contains(text(),'Удалить')]")).Click();
         }
 
         public void FillFormOnFifthTab(ContractData contract)   //заполнение данных на вкладке "Файлы"

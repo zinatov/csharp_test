@@ -13,7 +13,7 @@ namespace CB_AutoTests
         {
         }
 
-        private string contractNumberAndDate;
+        public string contractNumberAndDate;
 
         public string CleanUp(string text)
         {

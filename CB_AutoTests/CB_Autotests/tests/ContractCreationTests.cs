@@ -62,7 +62,7 @@ namespace CB_AutoTests
         {
             app.Navigator.OpenAgreementPage();
             app.Contracts.UserActionLog();
-            Assert.AreEqual(app.Navigator.TitleTextFromPage(By.CssSelector("h2.h4")), "Журнал операций");
+            Assert.AreEqual(app.Navigator.TitleTextFromPage(), "Журнал операций");
         }
 
         [Test]
@@ -79,6 +79,14 @@ namespace CB_AutoTests
             app.Navigator.OpenAgreementPage();
             app.Contracts.OpenContract();
          //   Assert.AreEqual(app.Navigator.TitleTextFromPage(By.CssSelector("h2.h4")), "Журнал операций");
+        }
+
+        [Test]
+        public void ContractExecuteTest()
+        {
+            app.Navigator.OpenAgreementPage();
+            app.Contracts.ContractExecute();
+            //   Assert.AreEqual(app.Navigator.TitleTextFromPage(By.CssSelector("h2.h4")), "Журнал операций");
         }
 
         [Test]

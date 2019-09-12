@@ -15,7 +15,7 @@ namespace CB_AutoTests
         protected IWebDriver driver;
         protected ApplicationManager manager;
         //Указать стенд на котором запускать автотесты
-        protected string PortNumberOfTestStand = "7003";
+        protected string PortNumberOfTestStand = "7005";
 
         public HelperBase(ApplicationManager manager)
         {
